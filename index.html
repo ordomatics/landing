@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ordomatics — AI-Native ERP &amp; WhatsApp</title>
+  <meta name="description" content="AI-powered WhatsApp and Odoo ERP, fully managed. Set up your AI business assistant by chatting on WhatsApp.">
+  <meta property="og:title" content="Ordomatics — AI-Native ERP &amp; WhatsApp">
+  <meta property="og:description" content="Set up your AI business assistant by sending a WhatsApp message. No tech team required.">
+  <meta property="og:type" content="website">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #25D366;
+      --green-dark: #128C7E;
+      --green-glow: rgba(37,211,102,0.12);
+      --indigo: #6366f1;
+      --bg: #050d1f;
+      --bg-card: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.08);
+      --text: #e8eeff;
+      --text-muted: #7a8aab;
+      --white: #ffffff;
+      --pricing-bg: #f8fafc;
+      --pricing-text: #0f172a;
+      --pricing-muted: #64748b;
+      --pricing-border: #e2e8f0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    /* ─── Nav */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(5,13,31,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .nav-logo .dot { color: var(--green); }
+    .nav-right { display: flex; align-items: center; gap: 1rem; }
+    .lang-toggle {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.35rem 0.875rem;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .lang-toggle:hover { color: var(--white); border-color: var(--green); }
+    .nav-cta {
+      background: var(--green);
+      color: #000;
+      font-weight: 700;
+      font-size: 0.875rem;
+      padding: 0.5rem 1.25rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .nav-cta:hover { background: var(--green-dark); color: var(--white); }
+
+    /* ─── Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -240px; left: 50%;
+      transform: translateX(-50%);
+      width: 900px; height: 900px;
+      background: radial-gradient(circle, var(--green-glow) 0%, transparent 68%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--green-glow);
+      border: 1px solid rgba(37,211,102,0.25);
+      border-radius: 100px;
+      padding: 0.375rem 1rem;
+      font-size: 0.8125rem;
+      color: var(--green);
+      font-weight: 500;
+      margin-bottom: 1.75rem;
+      position: relative;
+    }
+    .dot-pulse {
+      width: 6px; height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+    h1 {
+      font-size: clamp(2.25rem, 5.5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      max-width: 820px;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    .hero-sub {
+      font-size: 1.125rem;
+      color: var(--text-muted);
+      max-width: 540px;
+      margin-bottom: 2.5rem;
+      line-height: 1.75;
+      position: relative;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      position: relative;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--green);
+      color: #000;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 0.875rem 2rem;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.2s;
+      box-shadow: 0 0 28px rgba(37,211,102,0.25);
+    }
+    .btn-primary:hover { background: var(--green-dark); color: var(--white); transform: translateY(-1px); }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.875rem 2rem;
+      border-radius: 10px;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--green); color: var(--green); }
+
+    /* ─── Sections */
+    section { padding: 5rem 2rem; }
+    .section-label {
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.75rem;
+    }
+    h2 {
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      font-size: 1.0625rem;
+      color: var(--text-muted);
+      max-width: 540px;
+      margin: 0 auto 3.5rem;
+      line-height: 1.7;
+    }
+    .text-center { text-align: center; }
+
+    /* ─── How it works */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .step {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+    }
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px; height: 40px;
+      background: var(--green-glow);
+      border: 1px solid rgba(37,211,102,0.3);
+      border-radius: 10px;
+      font-size: 0.9375rem;
+      font-weight: 800;
+      color: var(--green);
+      margin-bottom: 1.125rem;
+    }
+    .step h3 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+    .step p { color: var(--text-muted); font-size: 0.9375rem; }
+
+    /* ─── Pricing */
+    #pricing { background: var(--pricing-bg); }
+    #pricing h2 { color: var(--pricing-text); }
+    #pricing .section-label { color: var(--green-dark); }
+    #pricing .section-sub { color: var(--pricing-muted); }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      align-items: start;
+    }
+    .pricing-card {
+      background: var(--white);
+      border: 1.5px solid var(--pricing-border);
+      border-radius: 20px;
+      padding: 2rem;
+    }
+    .pricing-card.popular { border-color: var(--green); box-shadow: 0 0 0 4px rgba(37,211,102,0.07); }
+    .pricing-card.enterprise { border-color: var(--indigo); }
+    .pricing-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.75rem;
+      border-radius: 100px;
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.03em;
+    }
+    .badge-starter { background: #f0fdf4; color: #16a34a; }
+    .badge-popular { background: #dcfce7; color: #15803d; }
+    .badge-enterprise { background: #eef2ff; color: #4338ca; }
+    .pricing-tier {
+      font-size: 1.375rem;
+      font-weight: 800;
+      color: var(--pricing-text);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.25rem;
+    }
+    .pricing-tagline {
+      font-size: 0.9rem;
+      color: var(--pricing-muted);
+      margin-bottom: 1.5rem;
+    }
+    .pricing-price {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--pricing-text);
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 0.625rem 0.875rem;
+      margin-bottom: 1.75rem;
+      border: 1px solid var(--pricing-border);
+    }
+    .pricing-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+      margin-bottom: 1.5rem;
+    }
+    .pricing-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.625rem;
+      font-size: 0.9rem;
+      color: var(--pricing-text);
+      line-height: 1.45;
+    }
+    .check { color: #16a34a; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .check-indigo { color: var(--indigo); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .pricing-addon {
+      font-size: 0.8125rem;
+      color: var(--pricing-muted);
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--pricing-border);
+    }
+    .btn-pricing {
+      display: block;
+      text-align: center;
+      padding: 0.8125rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.9375rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-pricing-green { background: var(--green); color: #000; }
+    .btn-pricing-green:hover { background: var(--green-dark); color: var(--white); }
+    .btn-pricing-indigo { background: var(--indigo); color: var(--white); }
+    .btn-pricing-indigo:hover { background: #4f46e5; }
+
+    /* ─── Features */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.75rem;
+      transition: border-color 0.2s;
+    }
+    .feature-card:hover { border-color: rgba(37,211,102,0.3); }
+    .feature-icon { font-size: 1.875rem; margin-bottom: 1rem; }
+    .feature-card h3 {
+      font-size: 1.0625rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .feature-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* ─── Differentiators */
+    .diff-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .diff-item {
+      display: flex;
+      gap: 1.125rem;
+      padding: 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+    .diff-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+    .diff-item h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+    .diff-item p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.55; }
+
+    /* ─── CTA Banner */
+    .cta-banner {
+      text-align: center;
+      background: linear-gradient(160deg, rgba(37,211,102,0.07) 0%, rgba(99,102,241,0.07) 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .cta-banner h2 { margin-bottom: 0.75rem; }
+    .cta-banner .cta-sub { color: var(--text-muted); margin-bottom: 2.25rem; font-size: 1.0625rem; }
+
+    /* ─── Footer */
+    footer {
+      padding: 2.25rem 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo { font-size: 1rem; font-weight: 800; color: var(--white); letter-spacing: -0.02em; }
+    .footer-logo .dot { color: var(--green); }
+    footer p { font-size: 0.85rem; color: var(--text-muted); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--green); }
+
+    /* ─── Responsive */
+    @media (max-width: 640px) {
+      nav { padding: 0.875rem 1.25rem; }
+      .nav-cta { display: none; }
+      .hero { padding: 7rem 1.25rem 4rem; }
+      section { padding: 3.5rem 1.25rem; }
+      footer { flex-direction: column; align-items: flex-start; }
+      .footer-links { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <a class="nav-logo" href="#">Ordo<span class="dot">.</span>matics</a>
+  <div class="nav-right">
+    <button class="lang-toggle" onclick="toggleLang()" id="lang-btn">FR</button>
+    <a class="nav-cta" href="mailto:hello@ordomatics.com"
+       data-en="Contact us" data-fr="Nous contacter">Contact us</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-badge">
+    <span class="dot-pulse"></span>
+    <span data-en="Powered by Claude, GPT-4 &amp; Mistral" data-fr="Propulsé par Claude, GPT-4 &amp; Mistral">Powered by Claude, GPT-4 &amp; Mistral</span>
+  </div>
+  <h1 data-en="AI-Native ERP &amp; WhatsApp,&lt;br&gt;Fully Managed"
+      data-fr="ERP &amp; WhatsApp Alimenté par l&apos;IA,&lt;br&gt;Entièrement Géré">
+    AI-Native ERP &amp; WhatsApp,<br>Fully Managed
+  </h1>
+  <p class="hero-sub"
+     data-en="Set up your AI business assistant by sending a WhatsApp message. Ordomatics connects your operations, customers, and AI on one platform — no tech team required."
+     data-fr="Configurez votre assistant IA en envoyant un message WhatsApp. Ordomatics connecte vos opérations, vos clients et votre IA sur une seule plateforme — sans équipe technique.">
+    Set up your AI business assistant by sending a WhatsApp message. Ordomatics connects your operations, customers, and AI on one platform — no tech team required.
+  </p>
+  <div class="hero-actions">
+    <!-- Replace REPLACEME with your WhatsApp number e.g. 33612345678 -->
+    <a class="btn-primary" href="https://wa.me/REPLACEME"
+       data-en="&#9654; Start on WhatsApp" data-fr="&#9654; Démarrer sur WhatsApp">&#9654; Start on WhatsApp</a>
+    <a class="btn-secondary" href="mailto:hello@ordomatics.com"
+       data-en="Contact us" data-fr="Nous contacter">Contact us</a>
+  </div>
+</section>
+
+<!-- How it works -->
+<section id="how-it-works">
+  <div class="text-center">
+    <p class="section-label" data-en="How it works" data-fr="Comment ça marche">How it works</p>
+    <h2 data-en="Live in three steps" data-fr="Opérationnel en trois étapes">Live in three steps</h2>
+    <p class="section-sub"
+       data-en="No forms, no portals, no tech team. Just open WhatsApp and our AI takes it from there."
+       data-fr="Pas de formulaires, pas de portails, pas d&apos;équipe technique. Ouvrez WhatsApp et notre IA s&apos;occupe du reste.">
+      No forms, no portals, no tech team. Just open WhatsApp and our AI takes it from there.
+    </p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3 data-en="Message our AI on WhatsApp" data-fr="Contactez notre IA sur WhatsApp">Message our AI on WhatsApp</h3>
+      <p data-en="No sign-up needed. Open WhatsApp, send a message, and our onboarding AI agent guides you through the setup."
+         data-fr="Pas d&apos;inscription. Ouvrez WhatsApp, envoyez un message, et notre agent IA vous guide pas à pas dans la configuration.">
+        No sign-up needed. Open WhatsApp, send a message, and our onboarding AI agent guides you through the setup.
+      </p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3 data-en="AI configures your setup" data-fr="L&apos;IA configure votre espace">AI configures your setup</h3>
+      <p data-en="Our AI walks you through your catalog, auto-replies, and chatbot persona — conversationally, no forms."
+         data-fr="Notre IA vous guide dans la configuration de votre catalogue, réponses automatiques et persona — par conversation, sans formulaires.">
+        Our AI walks you through your catalog, auto-replies, and chatbot persona — conversationally, no forms.
+      </p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3 data-en="Go live instantly" data-fr="Lancez-vous immédiatement">Go live instantly</h3>
+      <p data-en="Your AI assistant is live on WhatsApp. Need ERP? Log into Odoo and manage your full operations from day one."
+         data-fr="Votre assistant IA est actif sur WhatsApp. Besoin d&apos;un ERP ? Connectez-vous à Odoo et gérez toute votre activité dès le premier jour.">
+        Your AI assistant is live on WhatsApp. Need ERP? Log into Odoo and manage your full operations from day one.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section id="pricing">
+  <div class="text-center">
+    <p class="section-label" data-en="Pricing" data-fr="Tarifs">Pricing</p>
+    <h2 data-en="Simple, transparent tiers" data-fr="Des offres simples et transparentes">Simple, transparent tiers</h2>
+    <p class="section-sub"
+       data-en="Start with WhatsApp AI, scale to full ERP, or bring your own infrastructure."
+       data-fr="Commencez avec l&apos;IA WhatsApp, évoluez vers un ERP complet, ou apportez votre propre infrastructure.">
+      Start with WhatsApp AI, scale to full ERP, or bring your own infrastructure.
+    </p>
+  </div>
+  <div class="pricing-grid">
+
+    <!-- Starter -->
+    <div class="pricing-card">
+      <span class="pricing-badge badge-starter" data-en="Pay as you go" data-fr="À l&apos;usage">Pay as you go</span>
+      <div class="pricing-tier" data-en="Starter" data-fr="Démarrage">Starter</div>
+      <div class="pricing-tagline" data-en="WhatsApp AI for your business" data-fr="IA WhatsApp pour votre activité">WhatsApp AI for your business</div>
+      <div class="pricing-price" data-en="Conversation bundles · Pay as you go" data-fr="Forfaits conversations · À l&apos;usage">Conversation bundles · Pay as you go</div>
+      <ul class="pricing-features">
+        <li><span class="check">✓</span><span data-en="WhatsApp Business number setup" data-fr="Configuration numéro WhatsApp Business">WhatsApp Business number setup</span></li>
+        <li><span class="check">✓</span><span data-en="AI chatbot for customer queries" data-fr="Chatbot IA pour les requêtes clients">AI chatbot for customer queries</span></li>
+        <li><span class="check">✓</span><span data-en="Product &amp; service catalog" data-fr="Catalogue produits &amp; services">Product &amp; service catalog</span></li>
+        <li><span class="check">✓</span><span data-en="Auto-replies &amp; bulk messaging" data-fr="Réponses automatiques &amp; envois en masse">Auto-replies &amp; bulk messaging</span></li>
+        <li><span class="check">✓</span><span data-en="Media support (images, audio, docs)" data-fr="Support médias (images, audio, docs)">Media support (images, audio, docs)</span></li>
+        <li><span class="check">✓</span><span data-en="Conversation analytics" data-fr="Analytiques des conversations">Conversation analytics</span></li>
+        <li><span class="check">✓</span><span data-en="AI onboarding on WhatsApp" data-fr="Onboarding IA sur WhatsApp">AI onboarding on WhatsApp</span></li>
+        <li><span class="check">✓</span><span data-en="Fully managed by Ordomatics" data-fr="Entièrement géré par Ordomatics">Fully managed by Ordomatics</span></li>
+      </ul>
+      <a class="btn-pricing btn-pricing-green" href="https://wa.me/REPLACEME"
+         data-en="Start on WhatsApp" data-fr="Démarrer sur WhatsApp">Start on WhatsApp</a>
+    </div>
+
+    <!-- Business -->
+    <div class="pricing-card popular">
+      <span class="pricing-badge badge-popular" data-en="Most popular" data-fr="Le plus populaire">Most popular</span>
+      <div class="pricing-tier">Business</div>
+      <div class="pricing-tagline" data-en="Full ERP + WhatsApp + AI, managed" data-fr="ERP complet + WhatsApp + IA, géré">Full ERP + WhatsApp + AI, managed</div>
+      <div class="pricing-price" data-en="Per seat · Monthly subscription" data-fr="Par utilisateur · Abonnement mensuel">Per seat · Monthly subscription</div>
+      <ul class="pricing-features">
+        <li><span class="check">✓</span><span data-en="Everything in Starter" data-fr="Tout ce qui est inclus dans Démarrage">Everything in Starter</span></li>
+        <li><span class="check">✓</span><span data-en="Full Odoo 18 ERP backend access" data-fr="Accès complet à l&apos;ERP Odoo 18">Full Odoo 18 ERP backend access</span></li>
+        <li><span class="check">✓</span><span data-en="Own isolated database" data-fr="Base de données isolée dédiée">Own isolated database</span></li>
+        <li><span class="check">✓</span><span data-en="AI assistant embedded in Odoo" data-fr="Assistant IA intégré dans Odoo">AI assistant embedded in Odoo</span></li>
+        <li><span class="check">✓</span><span data-en="RAG knowledge base (index your docs)" data-fr="Base de connaissance RAG (indexez vos docs)">RAG knowledge base (index your docs)</span></li>
+        <li><span class="check">✓</span><span data-en="Document intelligence &amp; invoice AI import" data-fr="Intelligence documentaire &amp; import factures IA">Document intelligence &amp; invoice AI import</span></li>
+        <li><span class="check">✓</span><span data-en="REST API access" data-fr="Accès à l&apos;API REST">REST API access</span></li>
+        <li><span class="check">✓</span><span data-en="Multi-provider AI (Claude, GPT-4, Mistral…)" data-fr="IA multi-fournisseurs (Claude, GPT-4, Mistral…)">Multi-provider AI (Claude, GPT-4, Mistral…)</span></li>
+      </ul>
+      <div class="pricing-addon" data-en="+ Custom modules available as add-on" data-fr="+ Modules personnalisés disponibles en option">+ Custom modules available as add-on</div>
+      <a class="btn-pricing btn-pricing-green" href="https://wa.me/REPLACEME"
+         data-en="Get started" data-fr="Commencer">Get started</a>
+    </div>
+
+    <!-- Enterprise -->
+    <div class="pricing-card enterprise">
+      <span class="pricing-badge badge-enterprise" data-en="Self-hosted" data-fr="Auto-hébergé">Self-hosted</span>
+      <div class="pricing-tier" data-en="Enterprise" data-fr="Entreprise">Enterprise</div>
+      <div class="pricing-tagline" data-en="Your infra, our image, your rules" data-fr="Votre infra, notre image, vos règles">Your infra, our image, your rules</div>
+      <div class="pricing-price" data-en="Image license · Annual update retainer" data-fr="Licence image · Maintenance annuelle">Image license · Annual update retainer</div>
+      <ul class="pricing-features">
+        <li><span class="check-indigo">✓</span><span data-en="Everything in Business" data-fr="Tout ce qui est inclus dans Business">Everything in Business</span></li>
+        <li><span class="check-indigo">✓</span><span data-en="Docker image via private registry" data-fr="Image Docker via registre privé">Docker image via private registry</span></li>
+        <li><span class="check-indigo">✓</span><span data-en="Helm chart reference for Kubernetes" data-fr="Chart Helm de référence pour Kubernetes">Helm chart reference for Kubernetes</span></li>
+        <li><span class="check-indigo">✓</span><span data-en="Annual versioned update channel" data-fr="Canal de mise à jour annuel versionné">Annual versioned update channel</span></li>
+        <li><span class="check-indigo">✓</span><span data-en="Full data sovereignty" data-fr="Souveraineté totale des données">Full data sovereignty</span></li>
+        <li><span class="check-indigo">✓</span><span data-en="You operate your own infrastructure" data-fr="Vous gérez votre propre infrastructure">You operate your own infrastructure</span></li>
+      </ul>
+      <div class="pricing-addon" data-en="+ Custom module development available" data-fr="+ Développement de modules personnalisés disponible">+ Custom module development available</div>
+      <a class="btn-pricing btn-pricing-indigo" href="mailto:hello@ordomatics.com"
+         data-en="Contact us" data-fr="Nous contacter">Contact us</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- Features -->
+<section id="features">
+  <div class="text-center">
+    <p class="section-label" data-en="Platform" data-fr="Plateforme">Platform</p>
+    <h2 data-en="Everything your business needs" data-fr="Tout ce dont votre entreprise a besoin">Everything your business needs</h2>
+    <p class="section-sub"
+       data-en="40+ AI modules, WhatsApp automation, and cloud-native infrastructure — all in one platform."
+       data-fr="40+ modules IA, automatisation WhatsApp et infrastructure cloud-native — sur une seule plateforme.">
+      40+ AI modules, WhatsApp automation, and cloud-native infrastructure — all in one platform.
+    </p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">💬</div>
+      <h3 data-en="WhatsApp AI" data-fr="IA WhatsApp">WhatsApp AI</h3>
+      <p data-en="AI-powered chatbot, auto-replies, bulk messaging, and full conversation management on WhatsApp Business."
+         data-fr="Chatbot IA, réponses automatiques, envois en masse et gestion complète des conversations sur WhatsApp Business.">
+        AI-powered chatbot, auto-replies, bulk messaging, and full conversation management on WhatsApp Business.
+      </p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🏢</div>
+      <h3 data-en="Full ERP" data-fr="ERP Complet">Full ERP</h3>
+      <p data-en="Odoo 18 Enterprise: inventory, accounting, CRM, HR, and more — managed and always up to date."
+         data-fr="Odoo 18 Enterprise : stocks, comptabilité, CRM, RH et plus encore — géré et toujours à jour.">
+        Odoo 18 Enterprise: inventory, accounting, CRM, HR, and more — managed and always up to date.
+      </p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🧠</div>
+      <h3 data-en="AI Knowledge Base" data-fr="Base de Connaissance IA">AI Knowledge Base</h3>
+      <p data-en="Index your PDFs, websites, and documents. AI answers grounded in your own business data via semantic search."
+         data-fr="Indexez vos PDF, sites et documents. Réponses IA basées sur vos données métier via recherche sémantique.">
+        Index your PDFs, websites, and documents. AI answers grounded in your own business data via semantic search.
+      </p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📄</div>
+      <h3 data-en="Document Intelligence" data-fr="Intelligence Documentaire">Document Intelligence</h3>
+      <p data-en="OCR, PDF parsing, and AI-powered invoice import. Documents become structured Odoo records automatically."
+         data-fr="OCR, analyse PDF et import de factures par IA. Les documents deviennent automatiquement des enregistrements Odoo.">
+        OCR, PDF parsing, and AI-powered invoice import. Documents become structured Odoo records automatically.
+      </p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔀</div>
+      <h3 data-en="Multi-Provider AI" data-fr="IA Multi-Fournisseurs">Multi-Provider AI</h3>
+      <p data-en="Claude, GPT-4, Mistral, or self-hosted Ollama. Switch AI providers without changing any workflow."
+         data-fr="Claude, GPT-4, Mistral ou Ollama auto-hébergé. Changez de fournisseur IA sans modifier vos flux.">
+        Claude, GPT-4, Mistral, or self-hosted Ollama. Switch AI providers without changing any workflow.
+      </p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">☁️</div>
+      <h3 data-en="Cloud-Native Infrastructure" data-fr="Infrastructure Cloud-Native">Cloud-Native Infrastructure</h3>
+      <p data-en="Kubernetes, auto-scaling, GitOps, and zero-downtime deployments. Built for reliability at every scale."
+         data-fr="Kubernetes, auto-scaling, GitOps et déploiements sans interruption. Conçu pour la fiabilité à toutes les échelles.">
+        Kubernetes, auto-scaling, GitOps, and zero-downtime deployments. Built for reliability at every scale.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Why Ordomatics -->
+<section id="why">
+  <div class="text-center">
+    <p class="section-label" data-en="Why Ordomatics" data-fr="Pourquoi Ordomatics">Why Ordomatics</p>
+    <h2 data-en="Built differently" data-fr="Conçu différemment">Built differently</h2>
+    <p class="section-sub"
+       data-en="Not a plugin, not a connector. A fully integrated AI-native platform built from the ground up."
+       data-fr="Pas un plugin, pas un connecteur. Une plateforme IA native et entièrement intégrée, conçue dès la base.">
+      Not a plugin, not a connector. A fully integrated AI-native platform built from the ground up.
+    </p>
+  </div>
+  <div class="diff-grid">
+    <div class="diff-item">
+      <span class="diff-icon">📱</span>
+      <div>
+        <h3 data-en="WhatsApp-first onboarding" data-fr="Onboarding WhatsApp en premier">WhatsApp-first onboarding</h3>
+        <p data-en="Set up your AI business bot by chatting with it. No forms, no portals, no developers needed."
+           data-fr="Configurez votre bot IA en lui parlant. Pas de formulaires, pas de portails, pas de développeurs.">
+          Set up your AI business bot by chatting with it. No forms, no portals, no developers needed.
+        </p>
+      </div>
+    </div>
+    <div class="diff-item">
+      <span class="diff-icon">⚡</span>
+      <div>
+        <h3 data-en="AI embedded, not bolted on" data-fr="IA intégrée, pas ajoutée">AI embedded, not bolted on</h3>
+        <p data-en="40+ LLM modules native to Odoo 18 — across chat, documents, accounting, and WhatsApp in one system."
+           data-fr="40+ modules LLM natifs dans Odoo 18 — dans le chat, les documents, la comptabilité et WhatsApp.">
+          40+ LLM modules native to Odoo 18 — across chat, documents, accounting, and WhatsApp in one system.
+        </p>
+      </div>
+    </div>
+    <div class="diff-item">
+      <span class="diff-icon">🔓</span>
+      <div>
+        <h3 data-en="No AI vendor lock-in" data-fr="Pas de dépendance à un fournisseur IA">No AI vendor lock-in</h3>
+        <p data-en="Switch between Claude, GPT-4, Mistral, or self-hosted models at any time — workflows stay the same."
+           data-fr="Passez de Claude à GPT-4, Mistral ou des modèles auto-hébergés à tout moment — sans modifier vos flux.">
+          Switch between Claude, GPT-4, Mistral, or self-hosted models at any time — workflows stay the same.
+        </p>
+      </div>
+    </div>
+    <div class="diff-item">
+      <span class="diff-icon">🌍</span>
+      <div>
+        <h3 data-en="Global platform, local integrations" data-fr="Plateforme mondiale, intégrations locales">Global platform, local integrations</h3>
+        <p data-en="Wave Money, bilingual FR/EN, and regional API support. Built to work wherever your business operates."
+           data-fr="Wave Money, bilingue FR/EN et support d&apos;API régionales. Conçu pour fonctionner où que vous soyez.">
+          Wave Money, bilingual FR/EN, and regional API support. Built to work wherever your business operates.
+        </p>
+      </div>
+    </div>
+    <div class="diff-item">
+      <span class="diff-icon">🛡️</span>
+      <div>
+        <h3 data-en="Cloud-native by default" data-fr="Cloud-native par défaut">Cloud-native by default</h3>
+        <p data-en="Auto-scaling, zero-downtime deployments, and GitOps. Your platform grows reliably with your business."
+           data-fr="Auto-scaling, déploiements sans interruption et GitOps. Votre plateforme évolue en toute fiabilité.">
+          Auto-scaling, zero-downtime deployments, and GitOps. Your platform grows reliably with your business.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Banner -->
+<section class="cta-banner">
+  <h2 data-en="Ready to start?" data-fr="Prêt à démarrer ?">Ready to start?</h2>
+  <p class="cta-sub"
+     data-en="Send a WhatsApp message and your AI business assistant will be live in minutes."
+     data-fr="Envoyez un message WhatsApp et votre assistant IA sera opérationnel en quelques minutes.">
+    Send a WhatsApp message and your AI business assistant will be live in minutes.
+  </p>
+  <div class="hero-actions">
+    <a class="btn-primary" href="https://wa.me/REPLACEME"
+       data-en="&#9654; Start on WhatsApp" data-fr="&#9654; Démarrer sur WhatsApp">&#9654; Start on WhatsApp</a>
+    <a class="btn-secondary" href="mailto:hello@ordomatics.com"
+       data-en="Contact us" data-fr="Nous contacter">Contact us</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <span class="footer-logo">Ordo<span class="dot">.</span>matics</span>
+  <p>© 2026 Ordomatics. <span data-en="All rights reserved." data-fr="Tous droits réservés.">All rights reserved.</span></p>
+  <div class="footer-links">
+    <a href="mailto:hello@ordomatics.com" data-en="Contact" data-fr="Contact">Contact</a>
+    <a href="https://wa.me/REPLACEME" data-en="WhatsApp" data-fr="WhatsApp">WhatsApp</a>
+  </div>
+</footer>
+
+<script>
+  let currentLang = 'en';
+
+  function toggleLang() {
+    currentLang = currentLang === 'en' ? 'fr' : 'en';
+    document.getElementById('lang-btn').textContent = currentLang === 'en' ? 'FR' : 'EN';
+    document.documentElement.lang = currentLang;
+    applyLang();
+  }
+
+  function applyLang() {
+    document.querySelectorAll('[data-en]').forEach(function(el) {
+      var text = el.getAttribute('data-' + currentLang);
+      if (text) el.innerHTML = text;
+    });
+  }
+</script>
+
+</body>
+</html>
