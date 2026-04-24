@@ -58,6 +58,14 @@
     }
     .nav-logo .dot { color: var(--green); }
     .nav-right { display: flex; align-items: center; gap: 1rem; }
+    .nav-link {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--green); }
     .lang-toggle {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -426,6 +434,7 @@
     @media (max-width: 640px) {
       nav { padding: 0.875rem 1.25rem; }
       .nav-cta { display: none; }
+      .nav-link { display: none; }
       .hero { padding: 7rem 1.25rem 4rem; }
       section { padding: 3.5rem 1.25rem; }
       footer { flex-direction: column; align-items: flex-start; }
@@ -439,6 +448,7 @@
 <nav>
   <a class="nav-logo" href="#">Ordo<span class="dot">.</span>matics</a>
   <div class="nav-right">
+    <a class="nav-link" href="/benchmark/">💰 Comparison</a>
     <button class="lang-toggle" onclick="toggleLang()" id="lang-btn">FR</button>
     <a class="nav-cta" href="mailto:salam@ordomatics.com"
        data-en="Contact us" data-fr="Nous contacter">Contact us</a>
@@ -569,7 +579,7 @@
       <div class="pricing-price" data-en="Image license · Annual update retainer" data-fr="Licence image · Maintenance annuelle">Image license · Annual update retainer</div>
       <ul class="pricing-features">
         <li><span class="check-indigo">✓</span><span data-en="Everything in Business" data-fr="Tout ce qui est inclus dans Business">Everything in Business</span></li>
-        <li><span class="check-indigo">✓</span><span data-en="Docker image via private registry" data-fr="Image Docker via registre privé">Image Docker via registre privé</span></li>
+        <li><span class="check-indigo">✓</span><span data-en="Docker image via private registry" data-fr="Image Docker via registre privé">Docker image via registre privé</span></li>
         <li><span class="check-indigo">✓</span><span data-en="Helm chart reference for Kubernetes" data-fr="Chart Helm de référence pour Kubernetes">Chart Helm de référence pour Kubernetes</span></li>
         <li><span class="check-indigo">✓</span><span data-en="Annual versioned update channel" data-fr="Canal de mise à jour annuel versionné">Annual versioned update channel</span></li>
         <li><span class="check-indigo">✓</span><span data-en="Full data sovereignty" data-fr="Souveraineté totale des données">Full data sovereignty</span></li>

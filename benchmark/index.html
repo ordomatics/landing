@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cost Comparison — Ordomatics vs Odoo SH</title>
+  <meta name="description" content="Interactive TCO benchmark comparing Ordomatics vs Odoo SH for West African businesses.">
+  <meta property="og:title" content="Cost Comparison — Ordomatics vs Odoo SH">
+  <meta property="og:description" content="See how much you can save. Interactive comparison for 10, 50, and 150 user scenarios.">
+  <meta property="og:type" content="website">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #25D366;
+      --green-dark: #128C7E;
+      --green-glow: rgba(37,211,102,0.12);
+      --indigo: #6366f1;
+      --bg: #050d1f;
+      --bg-card: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.08);
+      --text: #e8eeff;
+      --text-muted: #7a8aab;
+      --white: #ffffff;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.6; font-size: 16px;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2rem; background: rgba(5,13,31,0.88);
+      backdrop-filter: blur(14px); border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-size: 1.25rem; font-weight: 800; color: var(--white); text-decoration: none; letter-spacing: -0.02em; }
+    .nav-logo .dot { color: var(--green); }
+    .nav-back {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px;
+      padding: 0.35rem 0.875rem; color: var(--text-muted); font-size: 0.875rem;
+      font-weight: 600; cursor: pointer; transition: all 0.2s; text-decoration: none;
+    }
+    .nav-back:hover { color: var(--white); border-color: var(--green); }
+
+    section { padding: 5rem 2rem; }
+    h1 { font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 800; letter-spacing: -0.025em; color: var(--white); margin-bottom: 1rem; }
+    .section-sub { font-size: 1.0625rem; color: var(--text-muted); max-width: 540px; margin: 0 auto 3.5rem; line-height: 1.7; }
+    .text-center { text-align: center; }
+
+    .scenario-selector {
+      display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;
+      margin-bottom: 3rem; max-width: 980px; margin-left: auto; margin-right: auto;
+    }
+    .scenario-btn {
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      padding: 1.25rem 1.75rem; border: 2px solid var(--border); background: var(--bg-card);
+      border-radius: 12px; cursor: pointer; transition: all 0.3s ease;
+      min-width: 140px; text-align: center; font-size: 0.95rem; font-family: inherit; color: var(--text);
+    }
+    .scenario-btn:hover { border-color: var(--green); background: rgba(37,211,102,0.05); }
+    .scenario-btn.active { background: var(--green); color: #000; border-color: var(--green); box-shadow: 0 0 28px rgba(37,211,102,0.25); }
+
+    .comparison {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem; max-width: 1000px; margin: 0 auto 2rem;
+    }
+    .pricing-card { background: var(--bg-card); border: 2px solid var(--border); border-radius: 16px; padding: 2.25rem; }
+    .pricing-card.ordomatics { border-color: var(--green); background: linear-gradient(135deg, rgba(37,211,102,0.08) 0%, rgba(37,211,102,0.03) 100%); }
+    .pricing-card.odoo { border-color: var(--indigo); background: linear-gradient(135deg, rgba(99,102,241,0.08) 0%, rgba(99,102,241,0.03) 100%); }
+    .card-title { font-size: 1.375rem; font-weight: 700; margin-bottom: 1.5rem; }
+    .pricing-card.ordomatics .card-title { color: var(--green); }
+    .pricing-card.odoo .card-title { color: var(--indigo); }
+
+    .pricing-breakdown { list-style: none; margin-bottom: 1.5rem; }
+    .pricing-item { padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; gap: 1rem; }
+    .pricing-item:last-child { border-bottom: none; }
+    .item-label { font-weight: 500; font-size: 0.9375rem; color: var(--text-muted); flex: 1; }
+    .item-value { font-size: 1.1rem; font-weight: 700; text-align: right; }
+    .pricing-card.ordomatics .item-value { color: var(--green); }
+    .pricing-card.odoo .item-value { color: var(--indigo); }
+
+    .pricing-total { padding: 1.5rem; border-radius: 12px; text-align: center; margin-top: 1.5rem; font-size: 1.375rem; font-weight: 700; }
+    .pricing-card.ordomatics .pricing-total { background: rgba(37,211,102,0.12); color: var(--green); }
+    .pricing-card.odoo .pricing-total { background: rgba(99,102,241,0.12); color: var(--indigo); }
+    .pricing-total-secondary { margin-top: 0.75rem; font-size: 0.95rem; font-weight: 500; opacity: 0.8; color: var(--text-muted); }
+
+    .breakdown-section {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 2rem; margin-bottom: 2rem; max-width: 1000px; margin-left: auto; margin-right: auto;
+    }
+    .breakdown-section h3 { font-size: 1.125rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--white); }
+    .breakdown-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; }
+    .breakdown-card { background: rgba(37,211,102,0.05); border: 1px solid rgba(37,211,102,0.2); border-radius: 12px; padding: 1.25rem; }
+    .breakdown-card.odoo { background: rgba(99,102,241,0.05); border-color: rgba(99,102,241,0.2); }
+    .breakdown-card.neutral { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.12); }
+    .breakdown-title { font-size: 0.85rem; font-weight: 700; color: var(--green); margin-bottom: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .breakdown-card.odoo .breakdown-title { color: var(--indigo); }
+    .breakdown-card.neutral .breakdown-title { color: var(--text-muted); }
+    .breakdown-line { display: flex; justify-content: space-between; padding: 0.4rem 0; font-size: 0.875rem; color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .breakdown-line:last-child { border-bottom: none; }
+    .breakdown-label { flex: 1; }
+    .breakdown-value { font-weight: 600; text-align: right; min-width: 80px; }
+    .breakdown-formula { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.8rem; color: var(--text-muted); font-family: 'Monaco', 'Courier New', monospace; line-height: 1.6; }
+
+    .comparison-summary {
+      background: linear-gradient(135deg, rgba(37,211,102,0.08) 0%, rgba(99,102,241,0.08) 100%);
+      border: 1px solid var(--border); padding: 2rem; border-radius: 16px;
+      margin-bottom: 2rem; max-width: 1000px; margin-left: auto; margin-right: auto;
+    }
+    .summary-row { display: flex; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 1.0625rem; }
+    .summary-row:last-child { border-bottom: none; }
+    .summary-label { font-weight: 600; }
+    .savings { color: var(--green); font-weight: 700; }
+
+    .info-note { background: rgba(37,211,102,0.08); border-left: 4px solid var(--green); padding: 1.5rem; border-radius: 8px; margin: 3rem auto; max-width: 1000px; font-size: 0.9rem; }
+    .info-note strong { color: var(--green); }
+    .info-note p { color: var(--text-muted); margin: 0; }
+
+    @media (max-width: 640px) {
+      h1 { font-size: 1.5rem; }
+      .scenario-selector { flex-direction: column; }
+      .scenario-btn { width: 100%; }
+      .pricing-item { flex-direction: column; align-items: flex-start; }
+      .item-value { text-align: left; }
+      .summary-row { flex-direction: column; gap: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/">Ordo<span class="dot">.</span>matics</a>
+  <a class="nav-back" href="/">← Back to home</a>
+</nav>
+
+<section class="text-center" style="padding-top: 7rem;">
+  <h1>💰 Ordomatics vs Odoo SH</h1>
+  <p class="section-sub">See exactly how much you can save. Detailed breakdown of all costs across 3 years.</p>
+</section>
+
+<section class="text-center">
+  <div class="scenario-selector">
+    <button class="scenario-btn active" onclick="showScenario('small')" data-scenario="small">
+      <span>👥</span><span style="font-weight:600">Small Team</span><span style="font-size:0.8rem;opacity:0.7">10 users</span>
+    </button>
+    <button class="scenario-btn" onclick="showScenario('sme')" data-scenario="sme">
+      <span>🏢</span><span style="font-weight:600">Growing SME</span><span style="font-size:0.8rem;opacity:0.7">50 users</span>
+    </button>
+    <button class="scenario-btn" onclick="showScenario('enterprise')" data-scenario="enterprise">
+      <span>🏛️</span><span style="font-weight:600">Enterprise</span><span style="font-size:0.8rem;opacity:0.7">150 users</span>
+    </button>
+  </div>
+</section>
+
+<section id="comparison-container"></section>
+
+<section class="text-center">
+  <div class="info-note">
+    <strong>📊 About These Calculations:</strong>
+    <p>All costs based on real pricing as of April 2026. Odoo SH pricing uses Francophone Africa regional rates. The Ordomatics €200/month is a flat all-inclusive fee covering platform, hosting, and infrastructure — same price regardless of user count.</p>
+  </div>
+</section>
+
+<script>
+  const scenarios = {
+    small:      { name: "Small Team",  users: 10,  perUser: 20.40, hosting: 30, flatFee: 200, devCost: 2000 },
+    sme:        { name: "Growing SME", users: 50,  perUser: 20.40, hosting: 30, flatFee: 200, devCost: 2000 },
+    enterprise: { name: "Enterprise",  users: 150, perUser: 20.40, hosting: 30, flatFee: 200, devCost: 2000 }
+  };
+
+  function calc(s) {
+    // ── Ordomatics 3-phase model ──────────────────────────────────────────
+    // Months 1-3:  €200 flat fee + €2,000 custom dev (4 days × €500/day)
+    // Months 4-6:  €200 flat fee + free support (bug fixes, adjustments)
+    // Months 7-12+ €200 flat fee only (regular recurring)
+    const phase1_monthly = s.flatFee + s.devCost;  // €2,200
+    const phase2_monthly = s.flatFee;              // €200 (support free)
+    const phase3_monthly = s.flatFee;              // €200 (regular)
+
+    const year1_ordo = (phase1_monthly * 3) + (phase2_monthly * 3) + (phase3_monthly * 6);
+    const year2_ordo = s.flatFee * 12;
+    const total_ordo = year1_ordo + (year2_ordo * 2);
+
+    // ── Odoo SH ───────────────────────────────────────────────────────────
+    const monthlyOdoo = (s.perUser * s.users) + s.hosting;
+    const year1_odoo  = (monthlyOdoo * 12) + 6000;
+    const year2_odoo  = monthlyOdoo * 12;
+    const total_odoo  = year1_odoo + (year2_odoo * 2);
+
+    return {
+      phase1_monthly, phase2_monthly, phase3_monthly,
+      year1_ordo, year2_ordo, total_ordo,
+      monthlyOdoo, year1_odoo, year2_odoo, total_odoo,
+      savings:    total_odoo - total_ordo,
+      savingsPct: ((total_odoo - total_ordo) / total_odoo * 100).toFixed(1)
+    };
+  }
+
+  function showScenario(key) {
+    document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector(`[data-scenario="${key}"]`).classList.add('active');
+
+    const s = scenarios[key];
+    const c = calc(s);
+
+    document.getElementById('comparison-container').innerHTML = `
+
+      <div class="comparison">
+        <div class="pricing-card ordomatics">
+          <div class="card-title">🚀 Ordomatics</div>
+          <ul class="pricing-breakdown">
+            <li class="pricing-item">
+              <span class="item-label">Flat monthly fee <small style="opacity:0.6">(platform + infra)</small></span>
+              <span class="item-value">€${s.flatFee}/mo</span>
+            </li>
+            <li class="pricing-item">
+              <span class="item-label">Custom dev — months 1–3</span>
+              <span class="item-value">€${(s.devCost * 3).toLocaleString()}</span>
+            </li>
+            <li class="pricing-item">
+              <span class="item-label">Free support — months 4–6 <small style="opacity:0.6">(bug fixes)</small></span>
+              <span class="item-value">Included</span>
+            </li>
+          </ul>
+          <div class="pricing-total">Year 1: €${c.year1_ordo.toLocaleString()}</div>
+          <div class="pricing-total pricing-total-secondary">3-Year Total: €${c.total_ordo.toLocaleString()}</div>
+        </div>
+
+        <div class="pricing-card odoo">
+          <div class="card-title">🏢 Odoo SH (Custom)</div>
+          <ul class="pricing-breakdown">
+            <li class="pricing-item">
+              <span class="item-label">Per-user licensing (€${s.perUser} × ${s.users})</span>
+              <span class="item-value">€${(s.perUser * s.users).toLocaleString()}/mo</span>
+            </li>
+            <li class="pricing-item">
+              <span class="item-label">Odoo.sh hosting</span>
+              <span class="item-value">€${s.hosting}/mo</span>
+            </li>
+            <li class="pricing-item">
+              <span class="item-label">Custom dev Year 1 (est.)</span>
+              <span class="item-value">€6,000</span>
+            </li>
+          </ul>
+          <div class="pricing-total">Year 1: €${c.year1_odoo.toLocaleString()}</div>
+          <div class="pricing-total pricing-total-secondary">3-Year Total: €${c.total_odoo.toLocaleString()}</div>
+        </div>
+      </div>
+
+      <div class="breakdown-section">
+        <h3>📐 Year 1 Breakdown — Ordomatics: €${c.year1_ordo.toLocaleString()}</h3>
+        <div class="breakdown-grid">
+
+          <div class="breakdown-card">
+            <div class="breakdown-title">Months 1–3</div>
+            <div class="breakdown-line">
+              <span class="breakdown-label">Flat fee</span>
+              <span class="breakdown-value">€${s.flatFee}</span>
+            </div>
+            <div class="breakdown-line">
+              <span class="breakdown-label">Dev (4 days × €500)</span>
+              <span class="breakdown-value">€${s.devCost.toLocaleString()}</span>
+            </div>
+            <div class="breakdown-line" style="font-weight:700;color:var(--green)">
+              <span class="breakdown-label">€${c.phase1_monthly.toLocaleString()} × 3</span>
+              <span class="breakdown-value">€${(c.phase1_monthly * 3).toLocaleString()}</span>
+            </div>
+          </div>
+
+          <div class="breakdown-card">
+            <div class="breakdown-title">Months 4–6</div>
+            <div class="breakdown-line">
+              <span class="breakdown-label">Flat fee</span>
+              <span class="breakdown-value">€${s.flatFee}</span>
+            </div>
+            <div class="breakdown-line">
+              <span class="breakdown-label">Support (bug fixes…)</span>
+              <span class="breakdown-value">FREE</span>
+            </div>
+            <div class="breakdown-line" style="font-weight:700;color:var(--green)">
+              <span class="breakdown-label">€${c.phase2_monthly} × 3</span>
+              <span class="breakdown-value">€${(c.phase2_monthly * 3).toLocaleString()}</span>
+            </div>
+          </div>
+
+          <div class="breakdown-card neutral">
+            <div class="breakdown-title">Months 7–12+</div>
+            <div class="breakdown-line">
+              <span class="breakdown-label">Flat fee</span>
+              <span class="breakdown-value">€${s.flatFee}</span>
+            </div>
+            <div class="breakdown-line">
+              <span class="breakdown-label">Regular recurring</span>
+              <span class="breakdown-value">—</span>
+            </div>
+            <div class="breakdown-line" style="font-weight:700;color:var(--green)">
+              <span class="breakdown-label">€${c.phase3_monthly} × 6</span>
+              <span class="breakdown-value">€${(c.phase3_monthly * 6).toLocaleString()}</span>
+            </div>
+          </div>
+
+        </div>
+        <div class="breakdown-formula" style="margin-top:1rem;text-align:center;font-size:0.9rem">
+          €${(c.phase1_monthly * 3).toLocaleString()} + €${(c.phase2_monthly * 3).toLocaleString()} + €${(c.phase3_monthly * 6).toLocaleString()} = <strong style="color:var(--green)">€${c.year1_ordo.toLocaleString()}</strong>
+        </div>
+      </div>
+
+      <div class="breakdown-section">
+        <h3>📐 Year 1 Breakdown — Odoo SH: €${c.year1_odoo.toLocaleString()}</h3>
+        <div class="breakdown-grid">
+          <div class="breakdown-card odoo" style="grid-column: 1 / -1; max-width: 480px;">
+            <div class="breakdown-title">Monthly recurring × 12 + dev</div>
+            <div class="breakdown-line">
+              <span class="breakdown-label">Licensing (€${s.perUser} × ${s.users})</span>
+              <span class="breakdown-value">€${(s.perUser * s.users).toLocaleString()}</span>
+            </div>
+            <div class="breakdown-line">
+              <span class="breakdown-label">Hosting</span>
+              <span class="breakdown-value">€${s.hosting}</span>
+            </div>
+            <div class="breakdown-line" style="font-weight:700;color:var(--indigo)">
+              <span class="breakdown-label">€${c.monthlyOdoo} × 12</span>
+              <span class="breakdown-value">€${(c.monthlyOdoo * 12).toLocaleString()}</span>
+            </div>
+            <div class="breakdown-line">
+              <span class="breakdown-label">Custom dev (Year 1)</span>
+              <span class="breakdown-value">€6,000</span>
+            </div>
+          </div>
+        </div>
+        <div class="breakdown-formula" style="margin-top:1rem;text-align:center;font-size:0.9rem">
+          €${c.monthlyOdoo} × 12 + €6,000 = <strong style="color:var(--indigo)">€${c.year1_odoo.toLocaleString()}</strong>
+        </div>
+      </div>
+
+      <div class="breakdown-section">
+        <h3>📊 3-Year Total</h3>
+        <div class="breakdown-grid">
+          <div class="breakdown-card">
+            <div class="breakdown-title">Ordomatics</div>
+            <div class="breakdown-line"><span class="breakdown-label">Year 1</span><span class="breakdown-value">€${c.year1_ordo.toLocaleString()}</span></div>
+            <div class="breakdown-line"><span class="breakdown-label">Year 2 (€${s.flatFee}/mo × 12)</span><span class="breakdown-value">€${c.year2_ordo.toLocaleString()}</span></div>
+            <div class="breakdown-line"><span class="breakdown-label">Year 3 (same)</span><span class="breakdown-value">€${c.year2_ordo.toLocaleString()}</span></div>
+            <div class="breakdown-formula" style="text-align:center;font-weight:700;color:var(--green);border:none;padding:0.5rem 0">
+              = <strong>€${c.total_ordo.toLocaleString()}</strong>
+            </div>
+          </div>
+          <div class="breakdown-card odoo">
+            <div class="breakdown-title">Odoo SH</div>
+            <div class="breakdown-line"><span class="breakdown-label">Year 1</span><span class="breakdown-value">€${c.year1_odoo.toLocaleString()}</span></div>
+            <div class="breakdown-line"><span class="breakdown-label">Year 2 (€${c.monthlyOdoo}/mo × 12)</span><span class="breakdown-value">€${c.year2_odoo.toLocaleString()}</span></div>
+            <div class="breakdown-line"><span class="breakdown-label">Year 3 (same)</span><span class="breakdown-value">€${c.year2_odoo.toLocaleString()}</span></div>
+            <div class="breakdown-formula" style="text-align:center;font-weight:700;color:var(--indigo);border:none;padding:0.5rem 0">
+              = <strong>€${c.total_odoo.toLocaleString()}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="comparison-summary">
+        <div class="summary-row"><span class="summary-label">Odoo SH 3-Year Total</span><span>€${c.total_odoo.toLocaleString()}</span></div>
+        <div class="summary-row"><span class="summary-label">Ordomatics 3-Year Total</span><span>€${c.total_ordo.toLocaleString()}</span></div>
+        <div class="summary-row"><span class="summary-label savings">💰 You Save</span><span class="savings">€${c.savings.toLocaleString()} (${c.savingsPct}%)</span></div>
+      </div>
+    `;
+  }
+
+  showScenario('sme');
+</script>
+
+</body>
+</html>
