@@ -260,11 +260,22 @@
     #pricing .section-sub { color: var(--pricing-muted); }
     .pricing-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      max-width: 1000px;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 1.25rem;
+      max-width: 1300px;
       margin: 0 auto;
       align-items: start;
+    }
+    .pricing-grid .pricing-card:nth-child(1) { grid-column: span 2; }
+    .pricing-grid .pricing-card:nth-child(2) { grid-column: span 2; }
+    .pricing-grid .pricing-card:nth-child(3) { grid-column: span 2; }
+    .pricing-grid .pricing-card:nth-child(4) { grid-column: 2 / span 2; }
+    .pricing-grid .pricing-card:nth-child(5) { grid-column: 4 / span 2; }
+    @media (max-width: 900px) {
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+      .pricing-grid .pricing-card:nth-child(n) { grid-column: span 1; }
     }
     .pricing-card {
       background: var(--white);
@@ -283,8 +294,10 @@
       margin-bottom: 1.25rem;
       letter-spacing: 0.03em;
     }
-    .badge-starter { background: #f0fdf4; color: #16a34a; }
-    .badge-popular { background: #dcfce7; color: #15803d; }
+    .badge-basic    { background: #f0fdf4; color: #16a34a; }
+    .badge-starter  { background: #eff6ff; color: #2563eb; }
+    .badge-popular  { background: #dcfce7; color: #15803d; }
+    .badge-business { background: #fffbeb; color: #b45309; }
     .badge-enterprise { background: #eef2ff; color: #4338ca; }
     .pricing-tier {
       font-size: 1.375rem;
@@ -523,23 +536,22 @@
     <p class="section-label" data-en="Pricing" data-fr="Tarifs">Pricing</p>
     <h2 data-en="Simple, transparent tiers" data-fr="Des offres simples et transparentes">Simple, transparent tiers</h2>
     <p class="section-sub"
-       data-en="Start with WhatsApp AI, scale to full ERP, or bring your own infrastructure."
-       data-fr="Commencez avec l&apos;IA WhatsApp, évoluez vers un ERP complet, ou apportez votre propre infrastructure.">
-      Start with WhatsApp AI, scale to full ERP, or bring your own infrastructure.
+       data-en="From a managed chatbot to a dedicated cluster — grow at your own pace."
+       data-fr="D&apos;un chatbot géré à un cluster dédié — évoluez à votre rythme.">
+      From a managed chatbot to a dedicated cluster — grow at your own pace.
     </p>
   </div>
   <div class="pricing-grid">
 
-    <!-- Starter -->
+    <!-- Tier 1 — Basic -->
     <div class="pricing-card">
-      <span class="pricing-badge badge-starter" data-en="Pay as you go" data-fr="À l&apos;usage">Pay as you go</span>
-      <div class="pricing-tier" data-en="Starter" data-fr="Démarrage">Starter</div>
-      <div class="pricing-tagline" data-en="WhatsApp AI for your business" data-fr="IA WhatsApp pour votre activité">WhatsApp AI for your business</div>
-      <div class="pricing-price" data-en="Conversation bundles · Pay as you go" data-fr="Forfaits conversations · À l&apos;usage">Conversation bundles · Pay as you go</div>
+      <span class="pricing-badge badge-basic" data-en="Pay as you go" data-fr="À l&apos;usage">Pay as you go</span>
+      <div class="pricing-tier" data-en="Basic" data-fr="Basique">Basic</div>
+      <div class="pricing-tagline" data-en="AI chatbot, zero setup" data-fr="Chatbot IA, zéro configuration">AI chatbot, zero setup</div>
+      <div class="pricing-price" data-en="Pay per conversation" data-fr="Paiement par conversation">Pay per conversation</div>
       <ul class="pricing-features">
+        <li><span class="check">✓</span><span data-en="AI chatbot configured in our backend" data-fr="Chatbot IA configuré dans notre backend">AI chatbot configured in our backend</span></li>
         <li><span class="check">✓</span><span data-en="WhatsApp Business number setup" data-fr="Configuration numéro WhatsApp Business">WhatsApp Business number setup</span></li>
-        <li><span class="check">✓</span><span data-en="AI chatbot for customer queries" data-fr="Chatbot IA pour les requêtes clients">AI chatbot for customer queries</span></li>
-        <li><span class="check">✓</span><span data-en="Product &amp; service catalog" data-fr="Catalogue produits &amp; services">Product &amp; service catalog</span></li>
         <li><span class="check">✓</span><span data-en="Auto-replies &amp; bulk messaging" data-fr="Réponses automatiques &amp; envois en masse">Auto-replies &amp; bulk messaging</span></li>
         <li><span class="check">✓</span><span data-en="Media support (images, audio, docs)" data-fr="Support médias (images, audio, docs)">Media support (images, audio, docs)</span></li>
         <li><span class="check">✓</span><span data-en="Conversation analytics" data-fr="Analytiques des conversations">Conversation analytics</span></li>
@@ -550,42 +562,78 @@
          data-en="Start on WhatsApp" data-fr="Démarrer sur WhatsApp">Start on WhatsApp</a>
     </div>
 
-    <!-- Business -->
-    <div class="pricing-card popular">
-      <span class="pricing-badge badge-popular" data-en="Most popular" data-fr="Le plus populaire">Most popular</span>
-      <div class="pricing-tier">Business</div>
-      <div class="pricing-tagline" data-en="Full ERP + WhatsApp + AI, managed" data-fr="ERP complet + WhatsApp + IA, géré">Full ERP + WhatsApp + AI, managed</div>
-      <div class="pricing-price" data-en="Per seat · Monthly subscription" data-fr="Par utilisateur · Abonnement mensuel">Per seat · Monthly subscription</div>
+    <!-- Tier 2 — Starter -->
+    <div class="pricing-card">
+      <span class="pricing-badge badge-starter" data-en="Shared DB" data-fr="BD Partagée">Shared DB</span>
+      <div class="pricing-tier" data-en="Starter" data-fr="Démarrage">Starter</div>
+      <div class="pricing-tagline" data-en="Full ERP on shared infrastructure" data-fr="ERP complet sur infrastructure partagée">Full ERP on shared infrastructure</div>
+      <div class="pricing-price" data-en="Monthly subscription" data-fr="Abonnement mensuel">Monthly subscription</div>
       <ul class="pricing-features">
-        <li><span class="check">✓</span><span data-en="Everything in Starter" data-fr="Tout ce qui est inclus dans Démarrage">Everything in Starter</span></li>
+        <li><span class="check">✓</span><span data-en="Everything in Basic" data-fr="Tout ce qui est inclus dans Basique">Everything in Basic</span></li>
+        <li><span class="check">✓</span><span data-en="Your own DB in a shared Postgres cluster" data-fr="Votre propre BD dans un cluster Postgres partagé">Your own DB in a shared Postgres cluster</span></li>
         <li><span class="check">✓</span><span data-en="Full Odoo 18 ERP backend access" data-fr="Accès complet à l&apos;ERP Odoo 18">Full Odoo 18 ERP backend access</span></li>
-        <li><span class="check">✓</span><span data-en="Own isolated database" data-fr="Base de données isolée dédiée">Own isolated database</span></li>
-        <li><span class="check">✓</span><span data-en="AI assistant embedded in Odoo" data-fr="Assistant IA intégré dans Odoo">AI assistant embedded in Odoo</span></li>
+        <li><span class="check">✓</span><span data-en="Configure WhatsApp, AI, Wave &amp; more" data-fr="Configurez WhatsApp, IA, Wave et plus">Configure WhatsApp, AI, Wave &amp; more</span></li>
         <li><span class="check">✓</span><span data-en="RAG knowledge base (index your docs)" data-fr="Base de connaissance RAG (indexez vos docs)">RAG knowledge base (index your docs)</span></li>
-        <li><span class="check">✓</span><span data-en="Document intelligence &amp; invoice AI import" data-fr="Intelligence documentaire &amp; import factures IA">Document intelligence &amp; import factures IA</span></li>
-        <li><span class="check">✓</span><span data-en="REST API access" data-fr="Accès à l&apos;API REST">REST API access</span></li>
-        <li><span class="check">✓</span><span data-en="Multi-provider AI (Claude, GPT-4, Mistral…)" data-fr="IA multi-fournisseurs (Claude, GPT-4, Mistral…)">Multi-provider AI (Claude, GPT-4, Mistral…)</span></li>
+        <li><span class="check">✓</span><span data-en="Document intelligence &amp; invoice AI" data-fr="Intelligence documentaire &amp; IA factures">Document intelligence &amp; invoice AI</span></li>
+        <li><span class="check">✓</span><span data-en="REST API access" data-fr="Accès API REST">REST API access</span></li>
       </ul>
-      <div class="pricing-addon" data-en="+ Custom modules available as add-on" data-fr="+ Modules personnalisés disponibles en option">+ Custom modules available as add-on</div>
+      <div class="pricing-addon" data-en="No custom module deployment" data-fr="Pas de déploiement de modules personnalisés">No custom module deployment</div>
       <a class="btn-pricing btn-pricing-green" href="https://wa.me/221773649575"
          data-en="Get started" data-fr="Commencer">Get started</a>
     </div>
 
-    <!-- Enterprise -->
+    <!-- Tier 3 — Developer -->
+    <div class="pricing-card popular">
+      <span class="pricing-badge badge-popular" data-en="Most popular" data-fr="Le plus populaire">Most popular</span>
+      <div class="pricing-tier" data-en="Developer" data-fr="Développeur">Developer</div>
+      <div class="pricing-tagline" data-en="Custom modules, dedicated pod" data-fr="Modules personnalisés, pod dédié">Custom modules, dedicated pod</div>
+      <div class="pricing-price" data-en="Monthly subscription" data-fr="Abonnement mensuel">Monthly subscription</div>
+      <ul class="pricing-features">
+        <li><span class="check">✓</span><span data-en="Everything in Starter" data-fr="Tout ce qui est inclus dans Démarrage">Everything in Starter</span></li>
+        <li><span class="check">✓</span><span data-en="GitHub repo → auto-deploy custom modules" data-fr="Repo GitHub → déploiement automatique des modules">GitHub repo → auto-deploy custom modules</span></li>
+        <li><span class="check">✓</span><span data-en="Dedicated Odoo pod" data-fr="Pod Odoo dédié">Dedicated Odoo pod</span></li>
+        <li><span class="check">✓</span><span data-en="Database in the shared Postgres cluster" data-fr="Base de données dans le cluster Postgres partagé">Database in the shared Postgres cluster</span></li>
+        <li><span class="check">✓</span><span data-en="GitOps deployment pipeline" data-fr="Pipeline de déploiement GitOps">GitOps deployment pipeline</span></li>
+        <li><span class="check">✓</span><span data-en="Full module development freedom" data-fr="Liberté totale de développement de modules">Full module development freedom</span></li>
+        <li><span class="check">✓</span><span data-en="Multi-provider AI (Claude, GPT-4, Mistral…)" data-fr="IA multi-fournisseurs (Claude, GPT-4, Mistral…)">Multi-provider AI (Claude, GPT-4, Mistral…)</span></li>
+      </ul>
+      <a class="btn-pricing btn-pricing-green" href="https://wa.me/221773649575"
+         data-en="Get started" data-fr="Commencer">Get started</a>
+    </div>
+
+    <!-- Tier 4 — Business -->
+    <div class="pricing-card">
+      <span class="pricing-badge badge-business" data-en="Dedicated DB" data-fr="BD Dédiée">Dedicated DB</span>
+      <div class="pricing-tier" data-en="Business" data-fr="Business">Business</div>
+      <div class="pricing-tagline" data-en="Dedicated database, full isolation" data-fr="Base de données dédiée, isolation totale">Dedicated database, full isolation</div>
+      <div class="pricing-price" data-en="Per seat · Monthly subscription" data-fr="Par utilisateur · Abonnement mensuel">Per seat · Monthly subscription</div>
+      <ul class="pricing-features">
+        <li><span class="check">✓</span><span data-en="Everything in Developer" data-fr="Tout ce qui est inclus dans Développeur">Everything in Developer</span></li>
+        <li><span class="check">✓</span><span data-en="Dedicated PostgreSQL instance" data-fr="Instance PostgreSQL dédiée">Dedicated PostgreSQL instance</span></li>
+        <li><span class="check">✓</span><span data-en="Data migrated from shared cluster" data-fr="Données migrées depuis le cluster partagé">Data migrated from shared cluster</span></li>
+        <li><span class="check">✓</span><span data-en="Full data isolation &amp; compliance" data-fr="Isolation totale des données &amp; conformité">Full data isolation &amp; compliance</span></li>
+        <li><span class="check">✓</span><span data-en="Advanced SLA guarantees" data-fr="Garanties SLA avancées">Advanced SLA guarantees</span></li>
+        <li><span class="check">✓</span><span data-en="Priority support" data-fr="Support prioritaire">Priority support</span></li>
+      </ul>
+      <a class="btn-pricing btn-pricing-green" href="https://wa.me/221773649575"
+         data-en="Get started" data-fr="Commencer">Get started</a>
+    </div>
+
+    <!-- Tier 5 — Enterprise -->
     <div class="pricing-card enterprise">
-      <span class="pricing-badge badge-enterprise" data-en="Self-hosted" data-fr="Auto-hébergé">Self-hosted</span>
+      <span class="pricing-badge badge-enterprise" data-en="Dedicated Cluster" data-fr="Cluster Dédié">Dedicated Cluster</span>
       <div class="pricing-tier" data-en="Enterprise" data-fr="Entreprise">Enterprise</div>
-      <div class="pricing-tagline" data-en="Your infra, our image, your rules" data-fr="Votre infra, notre image, vos règles">Your infra, our image, your rules</div>
-      <div class="pricing-price" data-en="Image license · Annual update retainer" data-fr="Licence image · Maintenance annuelle">Image license · Annual update retainer</div>
+      <div class="pricing-tagline" data-en="Your own Kubernetes cluster" data-fr="Votre propre cluster Kubernetes">Your own Kubernetes cluster</div>
+      <div class="pricing-price" data-en="Custom · Contact us" data-fr="Sur mesure · Contactez-nous">Custom · Contact us</div>
       <ul class="pricing-features">
         <li><span class="check-indigo">✓</span><span data-en="Everything in Business" data-fr="Tout ce qui est inclus dans Business">Everything in Business</span></li>
-        <li><span class="check-indigo">✓</span><span data-en="Docker image via private registry" data-fr="Image Docker via registre privé">Docker image via registre privé</span></li>
-        <li><span class="check-indigo">✓</span><span data-en="Helm chart reference for Kubernetes" data-fr="Chart Helm de référence pour Kubernetes">Chart Helm de référence pour Kubernetes</span></li>
-        <li><span class="check-indigo">✓</span><span data-en="Annual versioned update channel" data-fr="Canal de mise à jour annuel versionné">Annual versioned update channel</span></li>
-        <li><span class="check-indigo">✓</span><span data-en="Full data sovereignty" data-fr="Souveraineté totale des données">Full data sovereignty</span></li>
-        <li><span class="check-indigo">✓</span><span data-en="You operate your own infrastructure" data-fr="Vous gérez votre propre infrastructure">Vous gérez votre propre infrastructure</span></li>
+        <li><span class="check-indigo">✓</span><span data-en="Dedicated Kubernetes cluster" data-fr="Cluster Kubernetes dédié">Dedicated Kubernetes cluster</span></li>
+        <li><span class="check-indigo">✓</span><span data-en="Full infrastructure sovereignty" data-fr="Souveraineté totale de l&apos;infrastructure">Full infrastructure sovereignty</span></li>
+        <li><span class="check-indigo">✓</span><span data-en="Multi-region deployment" data-fr="Déploiement multi-région">Multi-region deployment</span></li>
+        <li><span class="check-indigo">✓</span><span data-en="Dedicated support team" data-fr="Équipe de support dédiée">Dedicated support team</span></li>
+        <li><span class="check-indigo">✓</span><span data-en="Custom SLAs &amp; compliance" data-fr="SLA personnalisés &amp; conformité">Custom SLAs &amp; compliance</span></li>
       </ul>
-      <div class="pricing-addon" data-en="+ Custom module development available" data-fr="+ Développement de modules personnalisés disponible">+ Custom module development available</div>
+      <div class="pricing-addon" data-en="+ Custom module development included" data-fr="+ Développement de modules personnalisés inclus">+ Custom module development included</div>
       <a class="btn-pricing btn-pricing-indigo" href="mailto:salam@ordomatics.com"
          data-en="Contact us" data-fr="Nous contacter">Contact us</a>
     </div>
