@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ordomatics — Pitch Deck</title>
+<style>
+  :root { --bg:#050d1f; --text:#e8eeff; --muted:#7a8aab; --green:#25D366; --indigo:#6366f1; --card:#0b1a38; }
+  * { box-sizing:border-box; margin:0; }
+  body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',sans-serif; }
+  .slide { width:1280px; height:720px; margin:24px auto; padding:72px 88px; display:flex; flex-direction:column; justify-content:center; gap:28px;
+           background:radial-gradient(900px 500px at 90% 0%, rgba(99,102,241,.18), transparent), var(--bg); border:1px solid #14264d; border-radius:16px; position:relative; overflow:hidden; }
+  .num { position:absolute; right:40px; bottom:28px; color:var(--muted); font-size:16px; }
+  .tag { color:var(--green); font-size:18px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
+  h1 { font-size:76px; line-height:1.05; letter-spacing:-.02em; }
+  h2 { font-size:52px; line-height:1.1; letter-spacing:-.01em; }
+  p.lead { font-size:30px; line-height:1.4; color:#c5d0ee; max-width:900px; }
+  .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .grid.two { grid-template-columns:repeat(2,1fr); }
+  .card { background:var(--card); border:1px solid #16305e; border-radius:14px; padding:28px; }
+  .card h3 { font-size:26px; margin-bottom:10px; }
+  .card p { font-size:21px; line-height:1.4; color:#b4c1e2; }
+  .big { font-size:64px; font-weight:800; color:var(--green); line-height:1; }
+  .accent { color:var(--green); }
+  a { color:var(--green); text-decoration:none; }
+  @media print {
+    @page { size:1280px 720px; margin:0; }
+    body { background:var(--bg); -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    .slide { margin:0; border:0; border-radius:0; page-break-after:always; break-after:page; }
+  }
+</style>
+</head>
+<body>
+
+<section class="slide">
+  <div class="tag">Investor Pitch</div>
+  <h1>Ordomatics</h1>
+  <p class="lead">AI-powered WhatsApp &amp; Odoo ERP.<br><span class="accent">Fully managed.</span></p>
+  <div class="num"><a href="https://ordomatics.com">ordomatics.com</a></div>
+</section>
+
+<section class="slide">
+  <div class="tag">The problem</div>
+  <h2>ERP is heavy. Customers are on WhatsApp.</h2>
+  <div class="grid">
+    <div class="card"><h3>Legacy complexity</h3><p>Traditional ERPs are expensive, need large tech teams and have a steep learning curve.</p></div>
+    <div class="card"><h3>Disconnected channels</h3><p>Customers and staff live on WhatsApp, while business data is trapped in back-office systems.</p></div>
+    <div class="card"><h3>The AI gap</h3><p>Most AI is a chatbot, not an operational brain that actually does the work.</p></div>
+  </div>
+  <div class="num">2</div>
+</section>
+
+<section class="slide">
+  <div class="tag">The solution</div>
+  <h2>A fully managed, AI-native ERP.</h2>
+  <div class="grid">
+    <div class="card"><h3>WhatsApp-first</h3><p>No forms, no portals. Chat with an AI agent to set up your business assistant in minutes.</p></div>
+    <div class="card"><h3>AI-native Odoo 18</h3><p>Accounting, CRM and Inventory with a built-in modular LLM suite.</p></div>
+    <div class="card"><h3>Operational AI</h3><p>It executes: imports invoices, generates marketing images and manages customer threads.</p></div>
+  </div>
+  <div class="num">3</div>
+</section>
+
+<section class="slide">
+  <div class="tag">Market</div>
+  <h2>Ripe for a managed, chat-first player.</h2>
+  <div class="grid">
+    <div class="card"><div class="big">$64B+</div><p style="margin-top:14px">Global ERP market, and growing.</p></div>
+    <div class="card"><div class="big">200M+</div><p style="margin-top:14px">Monthly active users on WhatsApp Business. Commerce is moving from web-first to chat-first.</p></div>
+    <div class="card"><div class="big">SMEs</div><p style="margin-top:14px">Want Enterprise Odoo power but lack the DevOps expertise to run it securely.</p></div>
+  </div>
+  <div class="num">4</div>
+</section>
+
+<section class="slide">
+  <div class="tag">Technology</div>
+  <h2>Built to run itself.</h2>
+  <div class="grid two">
+    <div class="card"><h3>Modular LLM suite</h3><p>Provider-agnostic: OpenAI, Anthropic, Mistral and local models.</p></div>
+    <div class="card"><h3>Deep WhatsApp integration</h3><p>Custom WhatsApp Business Account management, webhooks, threading and status tracking.</p></div>
+    <div class="card"><h3>Declarative infrastructure</h3><p>Kubernetes, GitOps with ArgoCD and Crossplane: every deployment is version-controlled.</p></div>
+    <div class="card"><h3>Knowledge &amp; storage</h3><p>PostgreSQL with pgvector for RAG knowledge bases; S3-compatible object storage for attachments.</p></div>
+  </div>
+  <div class="num">5</div>
+</section>
+
+<section class="slide">
+  <div class="tag">Business model</div>
+  <h2>Recurring revenue that scales with usage.</h2>
+  <div class="grid">
+    <div class="card"><h3>Tiered SaaS</h3><p>From lite “WhatsApp AI” to full managed ERP + AI.</p></div>
+    <div class="card"><h3>Credits-based AI</h3><p>Revenue tied to LLM usage and automated task execution.</p></div>
+    <div class="card"><h3>Platform-as-a-Service</h3><p>Developers bring their own infrastructure or scale on ours.</p></div>
+  </div>
+  <div class="num">6</div>
+</section>
+
+<section class="slide">
+  <div class="tag">Traction &amp; roadmap</div>
+  <h2>Live in production, onboarding clients.</h2>
+  <div class="grid two">
+    <div class="card"><h3>Today</h3><p>Deployed on Odoo 18 with a multi-environment pipeline (dev, staging, prod). Public entry point at ordomatics.com.</p></div>
+    <div class="card"><h3>Next</h3><p>Scale client onboarding on the production cluster and expand the tool ecosystem for industry-specific automation.</p></div>
+  </div>
+  <div class="num">7</div>
+</section>
+
+<section class="slide">
+  <div class="tag">Ordomatics</div>
+  <h1>Run your business<br>from <span class="accent">WhatsApp.</span></h1>
+  <p class="lead"><a href="https://ordomatics.com">ordomatics.com</a></p>
+  <div class="num">8</div>
+</section>
+
+</body>
+</html>
