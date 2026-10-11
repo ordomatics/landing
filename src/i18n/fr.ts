@@ -175,7 +175,7 @@ export const fr: Content = {
                 ],
                 payTitle: "Votre rémunération",
                 pay: [
-                    { big: "30%", text: "de chaque mensualité payée par vos clients entreprise, chaque mois, tant que le client reste abonné." },
+                    { big: "25%", text: "de chaque mensualité payée par vos clients entreprise, chaque mois, tant que le client reste abonné." },
                     { big: "+5%", text: "des ventes de chaque commercial terrain que vous recrutez, sans que cela réduise ses propres gains." },
                 ],
                 payNote: "Commissions retirables immédiatement par Wave, sans montant minimum, depuis un espace personnel où suivre vos clients, vos recrues et votre relevé. Le prix de Smartacus Pro et les conditions détaillées sont présentés lors de l'entretien.",
@@ -188,7 +188,7 @@ export const fr: Content = {
                 ],
                 applyText: "Envoyez un court message présentant votre parcours et les types d'entreprises que vous pouvez approcher.",
                 applySubject: "Candidature commercial d'affaires",
-                shareText: "Ordomatics recrute des commerciaux d'affaires à Dakar pour vendre Smartacus Pro : 30 % de chaque mensualité, chaque mois.",
+                shareText: "Ordomatics recrute des commerciaux d'affaires à Dakar pour vendre Smartacus Pro : 25 % de chaque mensualité, chaque mois.",
             },
             {
                 slug: "field",
@@ -207,7 +207,7 @@ export const fr: Content = {
                 ],
                 payTitle: "Votre rémunération",
                 pay: [
-                    { big: "30%", text: "de chaque recharge faite par vos clients, sans limite de durée." },
+                    { big: "25%", text: "de chaque recharge faite par vos clients, sans limite de durée." },
                     { big: "0 F", text: "de montant minimum : vos commissions sont retirables immédiatement par Wave." },
                 ],
                 payNote: "Le poste est rémunéré uniquement à la commission, sans salaire fixe. Un espace personnel avec votre QR code permet de suivre vos clients et votre relevé mensuel.",
@@ -220,7 +220,7 @@ export const fr: Content = {
                 ],
                 applyText: "Envoyez votre nom, votre ville et un message court sur la clientèle que vous pouvez approcher.",
                 applySubject: "Candidature commercial terrain",
-                shareText: "Ordomatics recrute des commerciaux terrain partout au Sénégal pour vendre Smartacus : 30 % de chaque recharge de vos clients.",
+                shareText: "Ordomatics recrute des commerciaux terrain partout au Sénégal pour vendre Smartacus : 25 % de chaque recharge de vos clients.",
             },
         ],
         likeTitle: "Le travail au quotidien.",

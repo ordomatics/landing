@@ -173,7 +173,7 @@ export const en = {
                 ],
                 payTitle: "What you earn",
                 pay: [
-                    { big: "30%", text: "of every monthly payment from your business clients, every month, for as long as the client stays." },
+                    { big: "25%", text: "of every monthly payment from your business clients, every month, for as long as the client stays." },
                     { big: "+5%", text: "of every sale made by each field seller you recruit, without reducing their own earnings." },
                 ],
                 payNote: "Commissions are withdrawable immediately via Wave, no minimum, from a personal space that tracks your clients, your recruits and your statement. The price of Smartacus Pro and the full terms are shared at interview.",
@@ -186,7 +186,7 @@ export const en = {
                 ],
                 applyText: "Send a short note about your background and the kinds of businesses you can reach.",
                 applySubject: "Business seller application",
-                shareText: "Ordomatics is hiring business sellers in Dakar for Smartacus Pro: 30% of every monthly payment, every month.",
+                shareText: "Ordomatics is hiring business sellers in Dakar for Smartacus Pro: 25% of every monthly payment, every month.",
             },
             {
                 slug: "field",
@@ -205,7 +205,7 @@ export const en = {
                 ],
                 payTitle: "What you earn",
                 pay: [
-                    { big: "30%", text: "of every top-up made by your clients, for as long as they keep using it." },
+                    { big: "25%", text: "of every top-up made by your clients, for as long as they keep using it." },
                     { big: "0 F", text: "minimum: your commissions are withdrawable immediately via Wave." },
                 ],
                 payNote: "The role is commission-only, with no fixed salary. A personal space with your own QR code tracks your clients and your monthly statement.",
@@ -218,7 +218,7 @@ export const en = {
                 ],
                 applyText: "Send your name, your city, and a short note about the clients you can reach.",
                 applySubject: "Field seller application",
-                shareText: "Ordomatics is hiring field sellers across Senegal for Smartacus: 30% of every top-up from your clients.",
+                shareText: "Ordomatics is hiring field sellers across Senegal for Smartacus: 25% of every top-up from your clients.",
             },
         ],
         likeTitle: "What the work is like.",
