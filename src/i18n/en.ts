@@ -66,7 +66,7 @@ export const en = {
               features: ["Runs on your own infrastructure", "The Odoo Helm chart, release pipeline and tooling we run ourselves", "Set up with you by our team"],
               button: "Discuss a project", page: "contact" },
         ],
-        payNote: "Pay by Wave.",
+        payNote: "Pay by mobile money or card.",
         stepsTitle: "How a project goes.",
         steps: [
             { title: "Tell us what you need", text: "A short call to choose between building, being run, or running it on your side." },
@@ -86,7 +86,7 @@ export const en = {
             { q: "Is this real Odoo?", a: "Yes, Odoo 18, with your own modules on top." },
             { q: "Can I try a change without risking my live data?", a: "Yes. A test environment holds a copy of every database, with mail, scheduled actions and payments switched off." },
             { q: "Do I need a long commitment?", a: "No annual commitment and no per-user licence." },
-            { q: "How do I pay?", a: "By Wave." },
+            { q: "How do I pay?", a: "By mobile money or card." },
         ],
         ctaTitle: "Not sure which one fits?",
         ctaText: "Tell us about your project and we will tell you plainly. We answer within a working day, in French or English.",

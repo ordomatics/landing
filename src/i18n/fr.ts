@@ -68,7 +68,7 @@ export const fr: Content = {
               features: ["Fonctionne sur votre propre infrastructure", "Le chart Helm Odoo, la chaîne de livraison et les outils que nous exploitons nous-mêmes", "Mis en place avec vous par notre équipe"],
               button: "Discuter d’un projet", page: "contact" },
         ],
-        payNote: "Paiement par Wave.",
+        payNote: "Paiement par mobile money ou par carte.",
         stepsTitle: "Comment se déroule un projet.",
         steps: [
             { title: "Dites-nous ce qu’il vous faut", text: "Un court échange pour choisir entre construire, être exploité, ou exploiter chez vous." },
@@ -88,7 +88,7 @@ export const fr: Content = {
             { q: "Est-ce du vrai Odoo ?", a: "Oui, Odoo 18, avec vos propres modules par-dessus." },
             { q: "Puis-je essayer un changement sans risquer mes données en production ?", a: "Oui. Un environnement de test contient une copie de chaque base, avec courriels, actions planifiées et paiements désactivés." },
             { q: "Faut-il s’engager longtemps ?", a: "Pas d’engagement annuel et pas de licence par utilisateur." },
-            { q: "Comment payer ?", a: "Par Wave." },
+            { q: "Comment payer ?", a: "Par mobile money ou par carte." },
         ],
         ctaTitle: "Vous hésitez entre les deux ?",
         ctaText: "Parlez-nous de votre projet et nous vous dirons franchement ce qui convient. Nous répondons sous un jour ouvré, en français ou en anglais.",
