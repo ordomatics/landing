@@ -1,6 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
-import { content, langPaths, url, EMAIL, SMARTACUS_JOBS_EMAIL, type Lang } from "../../i18n/site";
+import { content, langPaths, url, EMAIL, SMARTACUS_JOBS_EMAIL, APPLY_ENDPOINT, type Lang } from "../../i18n/site";
 
 export function getStaticPaths() {
     return langPaths();
@@ -96,7 +96,8 @@ const site = "https://ordomatics.com";
             <p class="muted" style="margin-top:14px;max-width:460px">{j.applyText}</p>
         </div>
 
-        <form class="form" style="flex:1 1 440px" data-mailto={EMAIL} data-subject={j.subject}>
+        <form class="form" style="flex:1 1 440px" data-mailto={EMAIL} data-subject={j.subject} data-endpoint={APPLY_ENDPOINT} data-sent={j.sent} data-failed={j.failed}>
+            <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" />
             <div class="row">
                 <div>
                     <label class="l" for="name">{j.name}</label>
@@ -123,7 +124,7 @@ const site = "https://ordomatics.com";
             </div>
             <div class="form-foot">
                 <button class="btn btn-primary" type="submit">{j.send}</button>
-                <span>{j.sendNote}</span>
+                <span class="status" role="status" aria-live="polite">{j.sendNote}</span>
             </div>
         </form>
     </section>

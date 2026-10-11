@@ -238,7 +238,9 @@ export const en = {
         about: "Tell us about you",
         aboutPlaceholder: "What have you built, and what would you like to build with us?",
         send: "Send application",
-        sendNote: "Opens your email app with the application ready to send.",
+        sendNote: "We read every application.",
+        sent: "Thank you. We have your application and will write back if it fits.",
+        failed: "We could not send it from here, so your email app is opening with the application ready.",
         subject: "Application",
     },
 };

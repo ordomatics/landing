@@ -13,6 +13,7 @@ export const SAAS = "https://saas.ordomatics.com";
 export const DOCS = "https://docs.ordomatics.com";
 export const PORTAL = "https://odoo.ordomatics.com";
 export const LEAD_ENDPOINT = `${PORTAL}/lead`;
+export const APPLY_ENDPOINT = `${PORTAL}/apply`;
 
 const SLUG: Record<Page, string> = { home: "", services: "services/", about: "about/", jobs: "jobs/", contact: "contact/" };
 

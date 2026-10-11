@@ -240,7 +240,9 @@ export const fr: Content = {
         about: "Parlez-nous de vous",
         aboutPlaceholder: "Qu’avez-vous construit, et que voudriez-vous construire avec nous ?",
         send: "Envoyer la candidature",
-        sendNote: "Ouvre votre application de messagerie avec la candidature prête à envoyer.",
+        sendNote: "Nous lisons chaque candidature.",
+        sent: "Merci. Nous avons bien reçu votre candidature et vous répondrons si elle correspond.",
+        failed: "L’envoi n’a pas abouti d’ici : votre application de messagerie s’ouvre avec la candidature prête à envoyer.",
         subject: "Candidature",
     },
 };
