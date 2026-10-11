@@ -62,7 +62,29 @@ const site = "https://ordomatics.com";
 
                 <div class="card" style="margin-top:40px;background:var(--ink);border-color:var(--ink)">
                     <p style="color:#ddd8f0">{role.applyText}</p>
-                    <a class="btn btn-white" href={`mailto:${SMARTACUS_JOBS_EMAIL}?subject=${encodeURIComponent(role.applySubject)}`}>{SMARTACUS_JOBS_EMAIL}</a>
+                    <form class="form" style="margin-top:20px" data-mailto={SMARTACUS_JOBS_EMAIL} data-subject={role.applySubject} data-endpoint={APPLY_ENDPOINT} data-sent={j.sent} data-failed={j.failed}>
+                        <input type="hidden" name="team" value="smartacus" />
+                        <input type="hidden" name="interest" value={role.applySubject} data-label={j.interest} />
+                        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" />
+                        <div class="row">
+                            <div>
+                                <label class="l" for={`${role.slug}-name`}>{j.name}</label>
+                                <input class="field" id={`${role.slug}-name`} name="name" data-label={j.name} type="text" required autocomplete="name" />
+                            </div>
+                            <div>
+                                <label class="l" for={`${role.slug}-email`}>{j.email}</label>
+                                <input class="field" id={`${role.slug}-email`} name="email" data-label={j.email} type="email" required autocomplete="email" />
+                            </div>
+                        </div>
+                        <div>
+                            <label class="l" for={`${role.slug}-about`}>{j.about}</label>
+                            <textarea class="field" id={`${role.slug}-about`} name="about" data-label={j.about} rows="4" required></textarea>
+                        </div>
+                        <div class="form-foot">
+                            <button class="btn btn-primary" type="submit">{j.send}</button>
+                            <span class="status" role="status" aria-live="polite">{j.sendNote}</span>
+                        </div>
+                    </form>
                 </div>
 
                 <div class="share" data-url={shareUrl} data-text={role.shareText}>
