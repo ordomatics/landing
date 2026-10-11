@@ -12,6 +12,7 @@ export const WHATSAPP = "https://wa.me/221773649575";
 export const SAAS = "https://saas.ordomatics.com";
 export const DOCS = "https://docs.ordomatics.com";
 export const PORTAL = "https://odoo.ordomatics.com";
+export const LEAD_ENDPOINT = `${PORTAL}/lead`;
 
 const SLUG: Record<Page, string> = { home: "", services: "services/", about: "about/", jobs: "jobs/", contact: "contact/" };
 
