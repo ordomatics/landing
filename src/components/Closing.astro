@@ -1,0 +1,25 @@
+---
+import { content, url, WHATSAPP, type Lang } from "../i18n/site";
+
+interface Props {
+    lang: Lang;
+    title?: string;
+    text?: string;
+}
+const { lang } = Astro.props;
+const c = content[lang].cta;
+const title = Astro.props.title ?? c.title;
+const text = Astro.props.text ?? c.text;
+---
+<section class="closing">
+    <div class="wrap">
+        <div>
+            <h2>{title}</h2>
+            <p>{text}</p>
+        </div>
+        <div class="btn-row">
+            <a class="btn btn-accent-white" href={url(lang, "contact")}>{c.write}</a>
+            <a class="btn btn-outline-white" href={WHATSAPP}>{c.whatsapp}</a>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,102 @@
+---
+import Base from "../../layouts/Base.astro";
+import Closing from "../../components/Closing.astro";
+import Icon from "../../components/Icon.astro";
+import { content, langPaths, url, SAAS, DOCS, type Lang } from "../../i18n/site";
+
+export function getStaticPaths() {
+    return langPaths();
+}
+const { lang } = Astro.props as { lang: Lang };
+const c = content[lang];
+const h = c.home;
+const to = (d: { href?: string; page?: string }) => d.href ?? url(lang, d.page as "contact");
+---
+<Base lang={lang} page="home" title={h.title} description={h.description}>
+    <section class="wrap hero">
+        <div>
+            <div class="eyebrow">{h.eyebrow}</div>
+            <h1>{h.h1}</h1>
+            <p class="lead">{h.lead}</p>
+            <div class="btn-row">
+                <a class="btn btn-primary" href={SAAS}>{h.start}</a>
+                <a class="btn btn-ghost" href={url(lang, "contact")}>{h.talk}</a>
+            </div>
+        </div>
+        <div class="shot">
+            <div class="shot-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="shot-url">odoo.ordomatics.com</span></div>
+            <img src="/img/portal.png" alt={h.shotAlt} width="1920" height="1200" />
+        </div>
+    </section>
+
+    <section id="platform" class="wrap section tight">
+        <h2>{h.pillarsTitle}</h2>
+        <div class="grid">
+            {h.pillars.map((p) => (
+                <div class="card">
+                    <Icon name={p.icon} />
+                    <h3>{p.title}</h3>
+                    <p>{p.text}</p>
+                </div>
+            ))}
+        </div>
+    </section>
+
+    <div class="band">
+        <section class="wrap section">
+            <h2>{h.servicesTitle}</h2>
+            <p class="section-lead">{h.servicesLead}</p>
+            <div class="grid wide">
+                {h.doors.map((d) => (
+                    <div class:list={["door", { dark: d.dark }]}>
+                        <div class="eyebrow">{d.label}</div>
+                        <h3>{d.title}</h3>
+                        <p>{d.text}</p>
+                        <a class="more" href={to(d)}>{d.link}</a>
+                    </div>
+                ))}
+            </div>
+        </section>
+    </div>
+
+    <section id="addons" class="wrap section">
+        <h2>{h.addonsTitle}</h2>
+        <div class="grid">
+            {h.addons.map((a) => (
+                <div class="card plain">
+                    <h3>{a.title}</h3>
+                    <p>{a.text}</p>
+                </div>
+            ))}
+        </div>
+    </section>
+
+    <section class="wrap section tight">
+        <div class="watch">
+            <div>
+                <div class="eyebrow">{h.videoLabel}</div>
+                <h2>{h.videoTitle}</h2>
+                <p>{h.videoText}</p>
+                <a class="more" href={DOCS + "/start/ship-a-change/"}>{h.videoLink}</a>
+            </div>
+            <div>
+                <video controls preload="none" muted playsinline src={DOCS + "/manage/ship-a-change-release.mp4"}></video>
+            </div>
+        </div>
+    </section>
+
+    <section class="wrap teasers">
+        <div>
+            <h3>{h.aboutTitle}</h3>
+            <p>{h.aboutText}</p>
+            <a href={url(lang, "about")}>{h.aboutLink}</a>
+        </div>
+        <div>
+            <h3>{h.jobsTitle}</h3>
+            <p>{h.jobsText}</p>
+            <a href={url(lang, "jobs")}>{h.jobsLink}</a>
+        </div>
+    </section>
+
+    <Closing lang={lang} />
+</Base>

@@ -1,0 +1,84 @@
+---
+import Base from "../../layouts/Base.astro";
+import { content, langPaths, EMAIL, WHATSAPP, PORTAL, DOCS, type Lang } from "../../i18n/site";
+
+export function getStaticPaths() {
+    return langPaths();
+}
+const { lang } = Astro.props as { lang: Lang };
+const k = content[lang].contact;
+---
+<Base lang={lang} page="contact" title={k.title} description={k.description}>
+    <section class="wrap page-head" style="padding-bottom:40px">
+        <div class="eyebrow">{k.eyebrow}</div>
+        <h1>{k.h1}</h1>
+        <p class="lead">{k.lead}</p>
+    </section>
+
+    <section class="wrap two-col" style="padding-bottom:88px">
+        <form class="form" data-mailto={EMAIL} data-subject={k.subject}>
+            <div class="row">
+                <div>
+                    <label class="l" for="name">{k.name}</label>
+                    <input class="field" id="name" name="name" data-label={k.name} type="text" required autocomplete="name" />
+                </div>
+                <div>
+                    <label class="l" for="email">{k.email}</label>
+                    <input class="field" id="email" name="email" data-label={k.email} type="email" required autocomplete="email" />
+                </div>
+            </div>
+            <div class="row">
+                <div>
+                    <label class="l" for="org">{k.org}</label>
+                    <input class="field" id="org" name="org" data-label={k.org} type="text" autocomplete="organization" />
+                </div>
+                <div>
+                    <label class="l" for="phone">{k.phone}</label>
+                    <input class="field" id="phone" name="phone" data-label={k.phone} type="tel" autocomplete="tel" />
+                </div>
+            </div>
+            <fieldset>
+                <legend>{k.needLegend}</legend>
+                <div class="opts">
+                    {k.needs.map((n, i) => (
+                        <label class="opt"><input type="radio" name="need" data-label={k.needLegend} value={n} checked={i === 0} /> {n}</label>
+                    ))}
+                </div>
+            </fieldset>
+            <div>
+                <label class="l" for="message">{k.message}</label>
+                <textarea class="field" id="message" name="message" data-label={k.message} rows="6" placeholder={k.messagePlaceholder} required></textarea>
+            </div>
+            <div class="form-foot">
+                <button class="btn btn-primary" type="submit">{k.send}</button>
+                <span>{k.sendNote}</span>
+            </div>
+        </form>
+
+        <aside class="aside">
+            <div class="dark-card">
+                <h2>{k.talkTitle}</h2>
+                <p>{k.talkText}</p>
+                <a class="btn btn-white" style="display:block" href={WHATSAPP}>{k.whatsapp}</a>
+            </div>
+            <div class="info">
+                <div>
+                    <div class="eyebrow">{k.emailLabel}</div>
+                    <div><a href={`mailto:${EMAIL}`}>{EMAIL}</a></div>
+                </div>
+                <div>
+                    <div class="eyebrow">{k.languagesLabel}</div>
+                    <div>{k.languages}</div>
+                </div>
+            </div>
+            <div class="client">
+                <strong>{k.clientTitle}</strong>
+                <p>{k.clientText} <a href={PORTAL}>{k.portal}</a> · <a href={DOCS}>{k.docs}</a></p>
+            </div>
+        </aside>
+    </section>
+
+    <script>
+        import "../../components/MailForm.client.ts";
+    </script>
+</Base>

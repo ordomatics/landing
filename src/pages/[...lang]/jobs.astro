@@ -1,0 +1,73 @@
+---
+import Base from "../../layouts/Base.astro";
+import { content, langPaths, EMAIL, type Lang } from "../../i18n/site";
+
+export function getStaticPaths() {
+    return langPaths();
+}
+const { lang } = Astro.props as { lang: Lang };
+const j = content[lang].jobs;
+---
+<Base lang={lang} page="jobs" title={j.title} description={j.description}>
+    <section class="wrap page-head">
+        <div class="eyebrow">{j.eyebrow}</div>
+        <h1>{j.h1}</h1>
+        <p class="lead">{j.lead}</p>
+    </section>
+
+    <div class="band">
+        <section class="wrap section">
+            <h2>{j.likeTitle}</h2>
+            <div class="grid">
+                {j.like.map((l) => (
+                    <div class="card plain">
+                        <h3>{l.title}</h3>
+                        <p>{l.text}</p>
+                    </div>
+                ))}
+            </div>
+        </section>
+    </div>
+
+    <section class="wrap two-col" style="padding-top:88px;padding-bottom:88px">
+        <div style="flex:1 1 320px;min-width:0">
+            <h2 style="font-size:clamp(26px,3vw,36px)">{j.applyTitle}</h2>
+            <p class="muted" style="margin-top:14px;max-width:460px">{j.applyText}</p>
+        </div>
+
+        <form class="form" style="flex:1 1 440px" data-mailto={EMAIL} data-subject={j.subject}>
+            <div class="row">
+                <div>
+                    <label class="l" for="name">{j.name}</label>
+                    <input class="field" id="name" name="name" data-label={j.name} type="text" required autocomplete="name" />
+                </div>
+                <div>
+                    <label class="l" for="email">{j.email}</label>
+                    <input class="field" id="email" name="email" data-label={j.email} type="email" required autocomplete="email" />
+                </div>
+            </div>
+            <div>
+                <label class="l" for="interest">{j.interest}</label>
+                <select class="field" id="interest" name="interest" data-label={j.interest}>
+                    {j.interests.map((i) => <option>{i}</option>)}
+                </select>
+            </div>
+            <div>
+                <label class="l" for="link">{j.link}</label>
+                <input class="field" id="link" name="link" data-label={j.link} type="url" placeholder={j.linkPlaceholder} />
+            </div>
+            <div>
+                <label class="l" for="about">{j.about}</label>
+                <textarea class="field" id="about" name="about" data-label={j.about} rows="5" placeholder={j.aboutPlaceholder} required></textarea>
+            </div>
+            <div class="form-foot">
+                <button class="btn btn-primary" type="submit">{j.send}</button>
+                <span>{j.sendNote}</span>
+            </div>
+        </form>
+    </section>
+
+    <script>
+        import "../../components/MailForm.client.ts";
+    </script>
+</Base>

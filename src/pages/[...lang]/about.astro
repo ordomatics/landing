@@ -1,0 +1,42 @@
+---
+import Base from "../../layouts/Base.astro";
+import Closing from "../../components/Closing.astro";
+import { content, langPaths, url, type Lang } from "../../i18n/site";
+
+export function getStaticPaths() {
+    return langPaths();
+}
+const { lang } = Astro.props as { lang: Lang };
+const a = content[lang].about;
+---
+<Base lang={lang} page="about" title={a.title} description={a.description}>
+    <section class="wrap page-head" style="padding-bottom:64px">
+        <div class="eyebrow">{a.eyebrow}</div>
+        <h1>{a.h1}</h1>
+        <p class="lead">{a.lead}</p>
+    </section>
+
+    <div class="band">
+        <section class="wrap section">
+            <h2>{a.believeTitle}</h2>
+            <div class="grid">
+                {a.beliefs.map((b) => (
+                    <div class="card plain">
+                        <h3>{b.title}</h3>
+                        <p>{b.text}</p>
+                    </div>
+                ))}
+            </div>
+        </section>
+    </div>
+
+    <section class="wrap" style="padding-top:64px;padding-bottom:88px;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between">
+        <div style="flex:1 1 440px">
+            <h2 style="font-size:clamp(26px,3vw,36px)">{a.workTitle}</h2>
+            <p class="muted" style="margin-top:10px;max-width:560px">{a.workText}</p>
+        </div>
+        <a class="btn btn-primary" href={url(lang, "jobs")}>{a.workButton}</a>
+    </section>
+
+    <Closing lang={lang} />
+</Base>

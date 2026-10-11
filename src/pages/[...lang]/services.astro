@@ -1,0 +1,82 @@
+---
+import Base from "../../layouts/Base.astro";
+import Closing from "../../components/Closing.astro";
+import { content, langPaths, url, type Lang } from "../../i18n/site";
+
+export function getStaticPaths() {
+    return langPaths();
+}
+const { lang } = Astro.props as { lang: Lang };
+const s = content[lang].services;
+const to = (t: { href?: string; page?: string }) => t.href ?? url(lang, t.page as "contact");
+---
+<Base lang={lang} page="services" title={s.title} description={s.description}>
+    <section class="wrap page-head">
+        <div class="eyebrow">{s.eyebrow}</div>
+        <h1>{s.h1}</h1>
+        <p class="lead">{s.lead}</p>
+    </section>
+
+    <section class="wrap" style="padding-bottom:88px">
+        <div class="tiers">
+            {s.tiers.map((t) => (
+                <div class:list={["tier", { featured: t.featured, dark: t.dark }]}>
+                    <div class="head">
+                        <span class:list={["eyebrow", { "on-dark": t.dark }]}>{t.label}</span>
+                        {t.badge && <span class="badge">{t.badge}</span>}
+                    </div>
+                    <h2>{t.title}</h2>
+                    <p class="t-text">{t.text}</p>
+                    <div class="price">{t.price}{t.unit && <small>{s.perMonth}</small>}</div>
+                    <ul class="ticks">{t.features.map((f) => <li>{f}</li>)}</ul>
+                    <a class:list={["btn", t.dark ? "btn-white" : t.featured ? "btn-primary" : "btn-ghost"]} href={to(t)}>{t.button}</a>
+                </div>
+            ))}
+        </div>
+        <p class="note">{s.payNote}</p>
+    </section>
+
+    <div class="band">
+        <section class="wrap section steps">
+            <h2>{s.stepsTitle}</h2>
+            <div class="grid">
+                {s.steps.map((st, i) => (
+                    <div class="card plain">
+                        <div class="num">{i + 1}</div>
+                        <h3>{st.title}</h3>
+                        <p>{st.text}</p>
+                    </div>
+                ))}
+            </div>
+        </section>
+    </div>
+
+    <section class="wrap section" style="padding-bottom:64px">
+        <h2>{s.compareTitle}</h2>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>{s.compareHead.map((h, i) => <th class={i === 1 ? "us" : undefined}>{h}</th>)}</tr>
+                </thead>
+                <tbody>
+                    {s.compareRows.map((r) => <tr>{r.map((cell) => <td>{cell}</td>)}</tr>)}
+                </tbody>
+            </table>
+        </div>
+        <p class="note" style="margin-top:16px;font-size:14px">{s.compareNote}</p>
+    </section>
+
+    <section class="wrap" style="padding-bottom:88px">
+        <h2>{s.faqTitle}</h2>
+        <div class="faq">
+            {s.faq.map((f) => (
+                <div>
+                    <h3>{f.q}</h3>
+                    <p>{f.a}</p>
+                </div>
+            ))}
+        </div>
+    </section>
+
+    <Closing lang={lang} title={s.ctaTitle} text={s.ctaText} />
+</Base>

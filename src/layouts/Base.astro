@@ -1,0 +1,68 @@
+---
+import "../styles/global.css";
+import { content, url, DOCS, SAAS, type Lang, type Page } from "../i18n/site";
+
+interface Props {
+    lang: Lang;
+    page: Page;
+    title: string;
+    description: string;
+}
+const { lang, page, title, description } = Astro.props;
+const c = content[lang];
+const other: Lang = lang === "en" ? "fr" : "en";
+const links: { key: keyof typeof c.nav; page?: Page; hash?: string; href?: string }[] = [
+    { key: "services", page: "services" },
+    { key: "platform", page: "home", hash: "#platform" },
+    { key: "addons", page: "home", hash: "#addons" },
+    { key: "about", page: "about" },
+    { key: "jobs", page: "jobs" },
+    { key: "contact", page: "contact" },
+];
+const site = "https://ordomatics.com";
+---
+<!doctype html>
+<html lang={c.htmlLang}>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={site + url(lang, page)} />
+    <link rel="alternate" hreflang="en" href={site + url("en", page)} />
+    <link rel="alternate" hreflang="fr" href={site + url("fr", page)} />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%235537c8'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+    <header class="wrap site-header">
+        <a class="brand" href={url(lang, "home")}><span class="brand-mark"></span>Ordomatics</a>
+        <nav class="nav" aria-label="Main">
+            {links.map((l) => (
+                <a href={url(lang, l.page!, l.hash)} aria-current={l.page === page && !l.hash ? "page" : undefined}>{c.nav[l.key]}</a>
+            ))}
+        </nav>
+        <div class="header-actions">
+            <a class="lang" href={url(other, page)} hreflang={other} lang={other} title={content[other].other.name}>{lang === "en" ? <><strong style="color:var(--ink)">EN</strong> · FR</> : <>EN · <strong style="color:var(--ink)">FR</strong></>}</a>
+            <a class="btn btn-sm btn-primary" href={url(lang, "contact")}>{c.nav.cta}</a>
+        </div>
+    </header>
+
+    <main>
+        <slot />
+    </main>
+
+    <footer class="wrap site-footer">
+        <span>{c.footer.rights}</span>
+        <nav aria-label="Footer">
+            <a href={DOCS}>{c.footer.docs}</a>
+            <a href={SAAS}>{c.footer.platform}</a>
+            <a href={url(lang, "contact")}>{c.footer.contact}</a>
+            <a href={SAAS + "/privacy"}>{c.footer.privacy}</a>
+            <a href={SAAS + "/terms"}>{c.footer.terms}</a>
+        </nav>
+    </footer>
+</body>
+</html>
