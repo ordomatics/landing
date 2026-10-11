@@ -6,6 +6,8 @@ export type Page = "home" | "services" | "about" | "jobs" | "contact";
 
 export const content = { en, fr };
 export const EMAIL = "salam@ordomatics.com";
+// Commission sales roles apply to the product's own address, not Ordomatics' hiring inbox.
+export const SMARTACUS_JOBS_EMAIL = "jobs@smartacus.pro";
 export const WHATSAPP = "https://wa.me/221773649575";
 export const SAAS = "https://saas.ordomatics.com";
 export const DOCS = "https://docs.ordomatics.com";

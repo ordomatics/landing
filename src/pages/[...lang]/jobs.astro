@@ -1,12 +1,13 @@
 ---
 import Base from "../../layouts/Base.astro";
-import { content, langPaths, EMAIL, type Lang } from "../../i18n/site";
+import { content, langPaths, url, EMAIL, SMARTACUS_JOBS_EMAIL, type Lang } from "../../i18n/site";
 
 export function getStaticPaths() {
     return langPaths();
 }
 const { lang } = Astro.props as { lang: Lang };
 const j = content[lang].jobs;
+const site = "https://ordomatics.com";
 ---
 <Base lang={lang} page="jobs" title={j.title} description={j.description}>
     <section class="wrap page-head">
@@ -14,6 +15,66 @@ const j = content[lang].jobs;
         <h1>{j.h1}</h1>
         <p class="lead">{j.lead}</p>
     </section>
+
+    {j.sales.map((role, i) => {
+        const anchor = `commerciaux-${role.slug === "business" ? "affaires" : "terrain"}`;
+        const shareUrl = site + url(lang, "jobs", `#${anchor}`);
+        return (
+        <div class:list={[{ band: i % 2 === 0 }]}>
+            <section class="wrap section" id={anchor}>
+                <span class="eyebrow">{role.badge}</span>
+                <h2 style="margin-top:10px">{role.title}</h2>
+                <p class="lead" style="margin-top:14px">{role.lead}</p>
+                <div class="role-chips">{role.chips.map((c) => <span class="badge">{c}</span>)}</div>
+
+                <div class="watch" style="margin-top:36px">
+                    <div>
+                        <p>{role.pitch}</p>
+                        {"pitchList" in role && role.pitchList && (
+                            <>
+                                <p style="margin-top:14px">{role.pitchListTitle}</p>
+                                <ul class="ticks">{role.pitchList.map((x) => <li>{x}</li>)}</ul>
+                            </>
+                        )}
+                    </div>
+                    <div>
+                        <video controls preload="metadata" playsinline poster={role.video.poster} src={role.video.src}></video>
+                        <p class="muted" style="margin-top:10px;font-size:14px">{role.video.caption}</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top:48px">{role.missionTitle}</h3>
+                <ul class="ticks">{role.mission.map((m) => <li>{m}</li>)}</ul>
+
+                <h3 style="margin-top:40px">{role.payTitle}</h3>
+                <div class="grid">
+                    {role.pay.map((p) => (
+                        <div class="card plain">
+                            <div class="price">{p.big}</div>
+                            <p>{p.text}</p>
+                        </div>
+                    ))}
+                </div>
+                <p class="note">{role.payNote}</p>
+
+                <h3 style="margin-top:40px">{role.profileTitle}</h3>
+                <ul class="ticks">{role.profile.map((p) => <li>{p}</li>)}</ul>
+
+                <div class="card" style="margin-top:40px;background:var(--ink);border-color:var(--ink)">
+                    <p style="color:#ddd8f0">{role.applyText}</p>
+                    <a class="btn btn-white" href={`mailto:${SMARTACUS_JOBS_EMAIL}?subject=${encodeURIComponent(role.applySubject)}`}>{SMARTACUS_JOBS_EMAIL}</a>
+                </div>
+
+                <div class="share" data-url={shareUrl} data-text={role.shareText}>
+                    <button type="button" class="btn btn-sm btn-ghost share-native" hidden>{j.shareLabel}</button>
+                    <a class="btn btn-sm btn-primary share-wa" target="_blank" rel="noopener">WhatsApp</a>
+                    <a class="btn btn-sm btn-ghost share-li" target="_blank" rel="noopener">LinkedIn</a>
+                    <button type="button" class="btn btn-sm btn-ghost share-copy" data-copied={j.shareCopied}>{j.shareCopy}</button>
+                </div>
+            </section>
+        </div>
+        );
+    })}
 
     <div class="band">
         <section class="wrap section">
@@ -69,5 +130,6 @@ const j = content[lang].jobs;
 
     <script>
         import "../../components/MailForm.client.ts";
+        import "../../components/ShareBar.client.ts";
     </script>
 </Base>
