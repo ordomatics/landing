@@ -31,14 +31,14 @@ const site = "https://ordomatics.com";
     <link rel="canonical" href={site + url(lang, page)} />
     <link rel="alternate" hreflang="en" href={site + url("en", page)} />
     <link rel="alternate" hreflang="fr" href={site + url("fr", page)} />
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%235537c8'/%3E%3C/svg%3E" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 </head>
 <body>
     <header class="wrap site-header">
-        <a class="brand" href={url(lang, "home")}><span class="brand-mark"></span>Ordomatics</a>
+        <a class="brand" href={url(lang, "home")}><img class="brand-mark" src="/logo.svg" alt="" width="30" height="30" />Ordomatics</a>
         <nav class="nav" aria-label="Main">
             {links.map((l) => (
                 <a href={url(lang, l.page!, l.hash)} aria-current={l.page === page && !l.hash ? "page" : undefined}>{c.nav[l.key]}</a>
